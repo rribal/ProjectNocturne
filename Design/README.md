@@ -1,5 +1,5 @@
-Project Nocturne
-===============
+Project Nocturne Design
+=======================
 
 This is the top level directory for Design Documents for Project Nocturne.
 
