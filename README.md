@@ -1,4 +1,4 @@
-ProjectNocturne
+Project Nocturne
 ===============
 
-ProjectNocturne
+This is the top level source directory for Project Nocturne.

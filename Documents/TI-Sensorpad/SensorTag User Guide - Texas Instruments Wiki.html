@@ -1,0 +1,1507 @@
+<!DOCTYPE html>
+<!-- saved from url=(0060)http://processors.wiki.ti.com/index.php/SensorTag_User_Guide -->
+<html lang="en" dir="ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>SensorTag User Guide - Texas Instruments Wiki</title>
+
+<meta name="generator" content="MediaWiki 1.16.0">
+<link rel="stylesheet" href="http://processors.wiki.ti.com/extensions/BreadCrumbs/BreadCrumbs.css">
+<link rel="shortcut icon" href="http://processors.wiki.ti.com/images/ti32.ico">
+<link rel="search" type="application/opensearchdescription+xml" href="http://processors.wiki.ti.com/opensearch_desc.php" title="Texas Instruments Wiki (en)">
+<link title="Creative Commons" type="application/rdf+xml" href="http://processors.wiki.ti.com/index.php?title=SensorTag_User_Guide&action=creativecommons" rel="meta">
+<link rel="copyright" href="http://processors.wiki.ti.com/index.php/Texas_Instruments_Wiki:Copyrights">
+<link rel="alternate" type="application/atom+xml" title="Texas Instruments Wiki Atom feed" href="http://processors.wiki.ti.com/index.php?title=Special:RecentChanges&feed=atom">
+<link rel="alternate" type="application/rss+xml" title="Texas Instruments Wiki RSS feed" href="http://processors.wiki.ti.com/index.php?title=Special:RecentChanges&feed=rss">
+<link rel="stylesheet" href="http://processors.wiki.ti.com/skins/vector/main-ltr.css?270" media="screen">
+<link rel="stylesheet" href="http://processors.wiki.ti.com/skins/common/shared.css?270" media="screen">
+<link rel="stylesheet" href="http://processors.wiki.ti.com/skins/common/commonPrint.css?270" media="print">
+<link rel="stylesheet" href="http://processors.wiki.ti.com/index.php?title=MediaWiki:Common.css&usemsgcache=yes&ctype=text%2Fcss&smaxage=18000&action=raw&maxage=18000">
+<link rel="stylesheet" href="http://processors.wiki.ti.com/index.php?title=MediaWiki:Print.css&usemsgcache=yes&ctype=text%2Fcss&smaxage=18000&action=raw&maxage=18000" media="print">
+<link rel="stylesheet" href="http://processors.wiki.ti.com/index.php?title=MediaWiki:Vector.css&usemsgcache=yes&ctype=text%2Fcss&smaxage=18000&action=raw&maxage=18000">
+<link rel="stylesheet" href="http://processors.wiki.ti.com/index.php?title=-&action=raw&maxage=18000&gen=css">
+<script type="text/javascript" async="" src="./SensorTag User Guide - Texas Instruments Wiki_files/ga.js"></script><script>
+var skin="vector",
+stylepath="/skins",
+wgUrlProtocols="http\\:\\/\\/|https\\:\\/\\/|ftp\\:\\/\\/|irc\\:\\/\\/|gopher\\:\\/\\/|telnet\\:\\/\\/|nntp\\:\\/\\/|worldwind\\:\\/\\/|mailto\\:|news\\:|svn\\:\\/\\/",
+wgArticlePath="/index.php/$1",
+wgScriptPath="",
+wgScriptExtension=".php",
+wgScript="/index.php",
+wgVariantArticlePath=false,
+wgActionPaths={},
+wgServer="http://processors.wiki.ti.com",
+wgCanonicalNamespace="",
+wgCanonicalSpecialPageName=false,
+wgNamespaceNumber=0,
+wgPageName="SensorTag_User_Guide",
+wgTitle="SensorTag User Guide",
+wgAction="view",
+wgArticleId=18450,
+wgIsArticle=true,
+wgUserName=null,
+wgUserGroups=null,
+wgUserLanguage="en",
+wgContentLanguage="en",
+wgBreakFrames=false,
+wgCurRevisionId=151637,
+wgVersion="1.16.0",
+wgEnableAPI=true,
+wgEnableWriteAPI=true,
+wgSeparatorTransformTable=["", ""],
+wgDigitTransformTable=["", ""],
+wgMainPageTitle="Main Page",
+wgFormattedNamespaces={"-2": "Media", "-1": "Special", "0": "", "1": "Talk", "2": "User", "3": "User talk", "4": "Texas Instruments Wiki", "5": "Texas Instruments Wiki talk", "6": "File", "7": "File talk", "8": "MediaWiki", "9": "MediaWiki talk", "10": "Template", "11": "Template talk", "12": "Help", "13": "Help talk", "14": "Category", "15": "Category talk", "20": "Staging", "21": "Staging talk", "22": "C6000 EABI", "23": "C6000 EABI talk", "102": "Property", "103": "Property talk", "104": "Type", "105": "Type talk", "106": "Form", "107": "Form talk", "108": "Concept", "109": "Concept talk", "170": "Filter", "171": "Filter talk", "274": "Widget", "275": "Widget talk"},
+wgNamespaceIds={"media": -2, "special": -1, "": 0, "talk": 1, "user": 2, "user_talk": 3, "texas_instruments_wiki": 4, "texas_instruments_wiki_talk": 5, "file": 6, "file_talk": 7, "mediawiki": 8, "mediawiki_talk": 9, "template": 10, "template_talk": 11, "help": 12, "help_talk": 13, "category": 14, "category_talk": 15, "staging": 20, "staging_talk": 21, "c6000_eabi": 22, "c6000_eabi_talk": 23, "property": 102, "property_talk": 103, "type": 104, "type_talk": 105, "form": 106, "form_talk": 107, "concept": 108, "concept_talk": 109, "filter": 170, "filter_talk": 171, "widget": 274, "widget_talk": 275, "image": 6, "image_talk": 7},
+wgSiteName="Texas Instruments Wiki",
+wgCategories=[],
+wgRestrictionEdit=[],
+wgRestrictionMove=[],
+wgRestrictionRead=[],
+wgFCKEditorDir="extensions/FCKeditor/fckeditor/",
+wgFCKEditorExtDir="extensions/FCKeditor",
+wgFCKEditorToolbarSet="Wiki",
+wgFCKEditorHeight="0",
+sfgAutocompleteOnAllChars=false,
+sfgScriptPath="/extensions/SemanticForms",
+sfgAutocompleteValues=[],
+sfgShowOnSelect=[],
+sfgFieldProperties=[],
+sfgDependentFields=[],
+sfgFormErrorsHeader="There were errors with your form input; see below.",
+sfgBlankErrorStr="cannot be blank",
+sfgBadURLErrorStr="must have the correct URL format, starting with \"http\"",
+sfgBadEmailErrorStr="must have a valid email address format",
+sfgBadNumberErrorStr="must be a valid number",
+sfgBadDateErrorStr="must be a valid date",
+sfgAnonEditWarning="Warning: You are not logged in. Your IP address will be recorded in this page\'s edit history.",
+sfgSaveAndContinueSummary="Saved using \"Save and continue\" button in form";
+</script><script src="./SensorTag User Guide - Texas Instruments Wiki_files/wikibits.js"></script><style type="text/css"></style>
+<script src="./SensorTag User Guide - Texas Instruments Wiki_files/jquery.min.js"></script>
+<script>var ltDebugMessages = false;</script>
+<script>
+var wgLTEMessages = {"livetranslate-button-translate":"Translate","livetranslate-button-translating":"Translating...","livetranslate-dictionary-error":"Could not obtain the live translate dictionary. No words will be treated as special during the translation process."};
+</script>
+<script>var ltMsAppId = "ECE119B5F43AE1DC3FCA6A86CB13B19F8BFF7E33";</script>
+<script src="./SensorTag User Guide - Texas Instruments Wiki_files/ajax.js"></script>
+<!--[if lt IE 7]><style type="text/css">body{behavior:url("/skins/vector/csshover.htc")}</style><![endif]-->
+<script src="./SensorTag User Guide - Texas Instruments Wiki_files/index.php"></script><link rel="stylesheet" type="text/css" href="./SensorTag User Guide - Texas Instruments Wiki_files/index(1).php">
+
+<script src="./SensorTag User Guide - Texas Instruments Wiki_files/ext.livetranslate.js"></script><script src="./SensorTag User Guide - Texas Instruments Wiki_files/ext.lt.ms.js"></script>		<link rel="alternate" type="application/rdf+xml" title="SensorTag User Guide" href="http://processors.wiki.ti.com/index.php?title=Special:ExportRDF/SensorTag_User_Guide&xmlmime=rdf">
+</head>
+<body class="mediawiki ltr ns-0 ns-subject page-SensorTag_User_Guide skin-vector">
+		<div id="mw-page-base" class="noprint"></div>
+		<div id="mw-head-base" class="noprint"></div>
+		<!-- content -->
+		<div id="content">
+			<a id="top"></a>
+			<div id="mw-js-message" style="display:none;"></div>
+						<!-- sitenotice -->
+			<div id="siteNotice"><img src="./SensorTag User Guide - Texas Instruments Wiki_files/twiki_promo4.gif"></div>
+			<!-- /sitenotice -->
+						<!-- firstHeading -->
+			<h1 id="firstHeading" class="firstHeading">SensorTag User Guide</h1>
+			<!-- /firstHeading -->
+			<!-- bodyContent -->
+			<div id="bodyContent">
+				<!-- tagline -->
+				<h3 id="siteSub">From Texas Instruments Wiki</h3>
+				<!-- /tagline -->
+				<!-- subtitle -->
+				<div id="contentSub"></div>
+				<!-- /subtitle -->
+																<!-- jumpto -->
+				<div id="jump-to-nav">
+					Jump to: <a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#mw-head">navigation</a>,
+					<a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#p-search">search</a>
+				</div>
+				<!-- /jumpto -->
+								<!-- bodytext -->
+				<div id="livetranslatediv" style="display:inline; float:right" class="notranslate" sourcelang="en">Translate this page to&nbsp;<select id="livetranslatelang"><option value="cs">cs - Česky</option>
+<option value="de">de - Deutsch</option>
+<option value="es">es - Español</option>
+<option value="fi">fi - Suomi</option>
+<option value="fr">fr - Français</option>
+<option value="hu">hu - Magyar</option>
+<option value="it">it - Italiano</option>
+<option value="ja">ja - 日本語</option>
+<option value="ko">ko - 한국어</option>
+<option value="pl">pl - Polski</option>
+<option value="pt">pt - Português</option>
+<option value="ru">ru - Русский</option>
+<option value="sv">sv - Svenska</option>
+<option value="vi">vi - Tiếng Việt</option>
+<option value="zh-cn">zh-CN - ‪中文(中国大陆)‬</option></select>&nbsp;<button id="livetranslatebutton">Translate</button>&nbsp;<button id="ltrevertbutton" style="display:none">Show original</button></div><div id="BreadCrumbsTrail"><a href="./SensorTag User Guide - Texas Instruments Wiki_files/SensorTag User Guide - Texas Instruments Wiki.html" title="SensorTag User Guide">SensorTag User Guide</a></div><div class="hf-nsheader"><p><script language="Javascript">
+var tiContentGroup;
+tiContentGroup = "/DSP/wiki/Ext";
+var tiPageName;
+tiPageName = 'SensorTag_User_Guide';
+</script>
+</p>
+<div style="float: right; padding: 0px 5px 5px 0px">
+<table style="border-collapse: separate; border-spacing: 0; border-width: 2px; border-style: hidden; border-color: gray; background-color: rgb(255, 255, 250);">
+<tbody><tr>
+<td> <!-- Google CSE Search Box Begins  -->
+<p></p><form action="http://processors.wiki.ti.com/index.php" id="searchbox_012993352299989377144:kjaa1vfng0a"><input type="hidden" name="title" value="GoogleSearch"><input type="hidden" name="cx" value="012993352299989377144:kjaa1vfng0a"><input type="hidden" name="cof" value="FORID:11"><input type="text" name="q" size="25" style="background-image: url(http://www.google.com/cse/intl/en/images/google_custom_search_watermark.gif); background-color: rgb(255, 255, 255); background-position: 0% 50%; background-repeat: no-repeat no-repeat;"><input type="submit" name="sa" value="Search"><input name="siteurl" type="hidden" value="processors.wiki.ti.com/index.php/SensorTag_User_Guide"><input name="ref" type="hidden" value="processors.wiki.ti.com/index.php/Bluetooth_SensorTag?INTC=SensorTag&amp;HQS=sensortag-wiki"><input name="ss" type="hidden" value=""></form><script type="text/javascript" src="./SensorTag User Guide - Texas Instruments Wiki_files/brand"></script>
+<!-- Google CSE Search Box Ends --><!-- Google Search Result Snippet Begins -->
+<p></p>
+<div id="results_012993352299989377144:kjaa1vfng0a"></div><script type="text/javascript">var googleSearchIframeName = "results_012993352299989377144:kjaa1vfng0a";var googleSearchFormName = "searchbox_012993352299989377144:kjaa1vfng0a";var googleSearchFrameWidth = 600;var googleSearchFrameborder = 0;var googleSearchDomain = "www.google.com";var googleSearchPath = "/cse";</script><script type="text/javascript" src="./SensorTag User Guide - Texas Instruments Wiki_files/show_afs_search.js"></script>
+<p><!-- Google Search Result Snippet Ends -->
+</p>
+</td></tr></tbody></table>
+</div>
+</div><div class="hf-header"></div><p><a href="http://processors.wiki.ti.com/index.php/Bluetooth_SensorTag" class="external text" rel="nofollow" target="_blank">Back to <i>Bluetooth</i> SensorTag main page</a>
+</p>
+<table id="toc" class="toc"><tbody><tr><td><div id="toctitle"><h2>Contents</h2> <span class="toctoggle">[<a id="togglelink" class="internal" href="javascript:toggleToc()">hide</a>]</span></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#SensorTag_Hardware_Overview"><span class="tocnumber">1</span> <span class="toctext">SensorTag Hardware Overview</span></a>
+<ul>
+<li class="toclevel-2 tocsection-2"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Sensor_Suppliers"><span class="tocnumber">1.1</span> <span class="toctext">Sensor Suppliers</span></a></li>
+<li class="toclevel-2 tocsection-3"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Other_Components"><span class="tocnumber">1.2</span> <span class="toctext">Other Components</span></a></li>
+<li class="toclevel-2 tocsection-4"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#SensorTag_Kit_Content"><span class="tocnumber">1.3</span> <span class="toctext">SensorTag Kit Content</span></a></li>
+<li class="toclevel-2 tocsection-5"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Optional_Accessories"><span class="tocnumber">1.4</span> <span class="toctext">Optional Accessories</span></a>
+<ul>
+<li class="toclevel-3 tocsection-6"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#CC_Debugger_.28Purchased_Separately.29"><span class="tocnumber">1.4.1</span> <span class="toctext">CC Debugger (Purchased Separately)</span></a></li>
+<li class="toclevel-3 tocsection-7"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#CC2540_USB_dongle.28Purchased_Seperately.29"><span class="tocnumber">1.4.2</span> <span class="toctext">CC2540 USB dongle(Purchased Seperately)</span></a></li>
+<li class="toclevel-3 tocsection-8"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Battery_Pack_.28Purchased_Seperately.29"><span class="tocnumber">1.4.3</span> <span class="toctext">Battery Pack (Purchased Seperately)</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-9"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#SensorTag_Hardware"><span class="tocnumber">2</span> <span class="toctext">SensorTag Hardware</span></a>
+<ul>
+<li class="toclevel-2 tocsection-10"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Insert_Battery"><span class="tocnumber">2.1</span> <span class="toctext">Insert Battery</span></a></li>
+<li class="toclevel-2 tocsection-11"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Side_Button"><span class="tocnumber">2.2</span> <span class="toctext">Side Button</span></a></li>
+<li class="toclevel-2 tocsection-12"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#LEDs"><span class="tocnumber">2.3</span> <span class="toctext">LEDs</span></a></li>
+<li class="toclevel-2 tocsection-13"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Bluetooth_Low_Energy_Radio"><span class="tocnumber">2.4</span> <span class="toctext">Bluetooth Low Energy Radio</span></a></li>
+<li class="toclevel-2 tocsection-14"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Sensors"><span class="tocnumber">2.5</span> <span class="toctext">Sensors</span></a>
+<ul>
+<li class="toclevel-3 tocsection-15"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Contactless_IR_Temperature_Sensor"><span class="tocnumber">2.5.1</span> <span class="toctext">Contactless IR Temperature Sensor</span></a></li>
+<li class="toclevel-3 tocsection-16"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Accelerometer"><span class="tocnumber">2.5.2</span> <span class="toctext">Accelerometer</span></a></li>
+<li class="toclevel-3 tocsection-17"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Humidity_Sensor"><span class="tocnumber">2.5.3</span> <span class="toctext">Humidity Sensor</span></a></li>
+<li class="toclevel-3 tocsection-18"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Magnetometer.2FCompass"><span class="tocnumber">2.5.4</span> <span class="toctext">Magnetometer/Compass</span></a></li>
+<li class="toclevel-3 tocsection-19"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Barometric_Pressure_Sensor"><span class="tocnumber">2.5.5</span> <span class="toctext">Barometric Pressure Sensor</span></a></li>
+<li class="toclevel-3 tocsection-20"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Gyroscope"><span class="tocnumber">2.5.6</span> <span class="toctext">Gyroscope</span></a></li>
+</ul>
+</li>
+<li class="toclevel-2 tocsection-21"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#EZ430_Battery_Pack_Interface"><span class="tocnumber">2.6</span> <span class="toctext">EZ430 Battery Pack Interface</span></a></li>
+<li class="toclevel-2 tocsection-22"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Debug_interface"><span class="tocnumber">2.7</span> <span class="toctext">Debug interface</span></a></li>
+</ul>
+</li>
+<li class="toclevel-1 tocsection-23"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#SensorTag_Software"><span class="tocnumber">3</span> <span class="toctext">SensorTag Software</span></a>
+<ul>
+<li class="toclevel-2 tocsection-24"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Operation"><span class="tocnumber">3.1</span> <span class="toctext">Operation</span></a></li>
+<li class="toclevel-2 tocsection-25"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Sensors_2"><span class="tocnumber">3.2</span> <span class="toctext">Sensors</span></a></li>
+<li class="toclevel-2 tocsection-26"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Gatt_Server"><span class="tocnumber">3.3</span> <span class="toctext">Gatt Server</span></a>
+<ul>
+<li class="toclevel-3 tocsection-27"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#IR_Temperature_Sensor"><span class="tocnumber">3.3.1</span> <span class="toctext">IR Temperature Sensor</span></a></li>
+<li class="toclevel-3 tocsection-28"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Accelerometer_2"><span class="tocnumber">3.3.2</span> <span class="toctext">Accelerometer</span></a></li>
+<li class="toclevel-3 tocsection-29"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Humidity_Sensor_2"><span class="tocnumber">3.3.3</span> <span class="toctext">Humidity Sensor</span></a></li>
+<li class="toclevel-3 tocsection-30"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Magnetometer"><span class="tocnumber">3.3.4</span> <span class="toctext">Magnetometer</span></a></li>
+<li class="toclevel-3 tocsection-31"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Barometric_Pressure_Sensor_2"><span class="tocnumber">3.3.5</span> <span class="toctext">Barometric Pressure Sensor</span></a></li>
+<li class="toclevel-3 tocsection-32"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Gyroscope_2"><span class="tocnumber">3.3.6</span> <span class="toctext">Gyroscope</span></a></li>
+<li class="toclevel-3 tocsection-33"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Test_Service"><span class="tocnumber">3.3.7</span> <span class="toctext">Test Service</span></a>
+<ul>
+<li class="toclevel-4 tocsection-34"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Power_on_Self_Test"><span class="tocnumber">3.3.7.1</span> <span class="toctext">Power on Self Test</span></a></li>
+<li class="toclevel-4 tocsection-35"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Test_Mode"><span class="tocnumber">3.3.7.2</span> <span class="toctext">Test Mode</span></a></li>
+</ul>
+</li>
+<li class="toclevel-3 tocsection-36"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Simple_Key_Service"><span class="tocnumber">3.3.8</span> <span class="toctext">Simple Key Service</span></a></li>
+<li class="toclevel-3 tocsection-37"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#OAD_.28Over-the-Air_Download.29_Service"><span class="tocnumber">3.3.9</span> <span class="toctext">OAD (Over-the-Air Download) Service</span></a>
+<ul>
+<li class="toclevel-4 tocsection-38"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#OAD_using_the_SensorTag_App"><span class="tocnumber">3.3.9.1</span> <span class="toctext">OAD using the SensorTag App</span></a></li>
+<li class="toclevel-4 tocsection-39"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#OAD_using_BLE_Device_Monitor"><span class="tocnumber">3.3.9.2</span> <span class="toctext">OAD using BLE Device Monitor</span></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</td></tr></tbody></table><script>if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<h1> <span class="mw-headline" id="SensorTag_Hardware_Overview"> SensorTag Hardware Overview  </span></h1>
+<div class="thumb tright"><div class="thumbinner" style="width:302px;"><a href="http://processors.wiki.ti.com/index.php/File:SensorTag_standalone.jpg" class="image"><img alt="" src="./SensorTag User Guide - Texas Instruments Wiki_files/300px-SensorTag_standalone.jpg" width="300" height="353" class="thumbimage"></a>  <div class="thumbcaption"><div class="magnify"><a href="http://processors.wiki.ti.com/index.php/File:SensorTag_standalone.jpg" class="internal" title="Enlarge"><img src="./SensorTag User Guide - Texas Instruments Wiki_files/magnify-clip.png" width="15" height="11" alt=""></a></div>SensorTag</div></div></div> <br>
+<p>The Bluetooth SensorTag packs the following sensor: 
+</p>
+<ul><li>Contactless IR temperature sensor (Texas Instruments TMP006) 
+</li><li>Humidity Sensor (Sensirion SHT21) 
+</li><li>Gyroscope (Invensense IMU-3000) 
+</li><li>Accelerometer (Kionix KXTJ9) 
+</li><li>Magnetometer (Freescale MAG3110) 
+</li><li>Barometric pressure sensor (Epcos T5400) 
+</li><li>On-chip temperature sensor (Built into the CC2541) 
+</li><li>Battery/voltage sensor (Built into the CC2541)
+</li></ul>
+<p>The reference design is fully tested and certified for by the following authorities: - FCC/IC for use of radio equipment in US and Canada - ETSI/CE for use of radio equipment in EU - Bluetooth SIG approved as Bluetooth 4.0 accessories For more information about approvals and certification of your own product please see <a href="http://processors.wiki.ti.com/index.php/How_to_Certify_your_Bluetooth_product" title="How to Certify your Bluetooth product">How to Certify your Bluetooth product</a> 
+</p>
+<h3> <span class="mw-headline" id="Sensor_Suppliers"> Sensor Suppliers </span></h3>
+<p><a href="http://www.ti.com/tmp006" class="external text" rel="nofollow" target="_blank">TMP006 Contactless IR Temperature Sensor, Texas Instruments</a><br>
+<a href="http://www.sensirion.com/" class="external text" rel="nofollow" target="_blank">SHT21 Humidity Sensor, Sensirion</a><br>
+<a href="http://www.invensense.com/" class="external text" rel="nofollow" target="_blank">IMU-3000 Gyroscope, Invensense</a><br>
+<a href="http://www.kionix.com/" class="external text" rel="nofollow" target="_blank">KXTJ9 Accelerometer, Kionix</a><br>
+<a href="http://www.freescale.com/" class="external text" rel="nofollow" target="_blank">MAG3110 Magnetometer, Freescale</a><br>
+<a href="http://www.epcos.com/" class="external text" rel="nofollow" target="_blank">T5400(C953H) Barometric Pressure Sensor, Epcos</a><br>
+</p>
+<h3> <span class="mw-headline" id="Other_Components"> Other Components </span></h3>
+<p><a href="http://www.ti.com/product/cc2541" class="external text" rel="nofollow" target="_blank">CC2541 Bluetooth Low Energy Radio SoC, Texas Instruments</a><br>
+<a href="http://www.ti.com/product/tps62730" class="external text" rel="nofollow" target="_blank">TPS62730 Ultra Low Power DC/DC Converter, Texas Instruments</a><br>
+</p>
+<h2> <span class="mw-headline" id="SensorTag_Kit_Content"> SensorTag Kit Content  </span></h2>
+<div class="thumb tright"><div class="thumbinner" style="width:182px;"><a href="http://processors.wiki.ti.com/index.php/File:CC_Debugger.jpg" class="image"><img alt="" src="./SensorTag User Guide - Texas Instruments Wiki_files/180px-CC_Debugger.jpg" width="180" height="199" class="thumbimage"></a>  <div class="thumbcaption"><div class="magnify"><a href="http://processors.wiki.ti.com/index.php/File:CC_Debugger.jpg" class="internal" title="Enlarge"><img src="./SensorTag User Guide - Texas Instruments Wiki_files/magnify-clip.png" width="15" height="11" alt=""></a></div>CC Debugger</div></div></div>
+<p>The SensorTag kit includes one SensorTag with enclosure and battery. The plastic enclosure can easily be removed to access the internals of the SensorTag. To use the SensorTag a smartphone with Bluetooth 4.0 is required. A list of supported devices is updated here <a href="http://processors.wiki.ti.com/index.php/Bluetooth_SensorTag#Supported_App_Development_Platforms" title="Bluetooth SensorTag">Supported App Development Platforms</a> 
+</p>
+<h2> <span class="mw-headline" id="Optional_Accessories"> Optional Accessories  </span></h2>
+<h3> <span class="mw-headline" id="CC_Debugger_.28Purchased_Separately.29"> CC Debugger (Purchased Separately)  </span></h3>
+<p>USB Debug Interface for programming and debugging SensorTag firmware The CC Debugger is not required for normal testing and development of SensorTag applications. The SensorTag is configurable from the smartphone app example or the PC tool <a href="http://processors.wiki.ti.com/index.php/BLE_Device_Monitor_User_Guide" class="external text" rel="nofollow" target="_blank">BLE Device Monitor</a>, provided as a stand-alone tool. 
+</p><p>If you want to make custom versions of the SensorTag firmware the CC debugger can be used to debug applications or download hex files. See&nbsp;<a href="http://www.ti.com/tool/cc-debugger" class="external text" rel="nofollow" target="_blank">CC debugger product page</a>.<br> 
+</p>
+<div class="thumb tright"><div class="thumbinner" style="width:182px;"><a href="http://processors.wiki.ti.com/index.php/File:CC2531_USB_dongle.jpg" class="image"><img alt="" src="./SensorTag User Guide - Texas Instruments Wiki_files/180px-CC2531_USB_dongle.jpg" width="180" height="127" class="thumbimage"></a>  <div class="thumbcaption"><div class="magnify"><a href="http://processors.wiki.ti.com/index.php/File:CC2531_USB_dongle.jpg" class="internal" title="Enlarge"><img src="./SensorTag User Guide - Texas Instruments Wiki_files/magnify-clip.png" width="15" height="11" alt=""></a></div>CC2540 USB dongle</div></div></div>
+<h3> <span class="mw-headline" id="CC2540_USB_dongle.28Purchased_Seperately.29"> CC2540 USB dongle(Purchased Seperately)  </span></h3>
+<p>The USB dongle can be used for packet sniffer of RF activity and it is needed for the <a href="http://processors.wiki.ti.com/index.php/BLE_Device_Monitor_User_Guide" class="external text" rel="nofollow" target="_blank">BLE Device Monitor</a>.<br> <a href="http://www.ti.com/tool/cc2540emk-usb" class="external text" rel="nofollow" target="_blank">CC2540 USB dongle product page</a><br>
+</p>
+<h3> <span class="mw-headline" id="Battery_Pack_.28Purchased_Seperately.29"> Battery Pack (Purchased Seperately) </span></h3>
+<div class="thumb tright"><div class="thumbinner" style="width:182px;"><a href="http://processors.wiki.ti.com/index.php/File:Battery_Board.jpg" class="image"><img alt="" src="./SensorTag User Guide - Texas Instruments Wiki_files/180px-Battery_Board.jpg" width="180" height="56" class="thumbimage"></a>  <div class="thumbcaption"><div class="magnify"><a href="http://processors.wiki.ti.com/index.php/File:Battery_Board.jpg" class="internal" title="Enlarge"><img src="./SensorTag User Guide - Texas Instruments Wiki_files/magnify-clip.png" width="15" height="11" alt=""></a></div>Battery Board</div></div></div><br> 
+<p>Used for battery power for the SensorTag for applications that requires longer battery life. Can be purchased as part of several EZ430 development kits or CC2530ZNP ZigBee kits.Note that a connector(not included) for the battery pack must be soldered onto the SensorTag board<br> 
+</p>
+<div class="thumb tright"><div class="thumbinner" style="width:182px;"><a href="http://processors.wiki.ti.com/index.php/File:EZ430-RF2500-SEH.png" class="image"><img alt="" src="./SensorTag User Guide - Texas Instruments Wiki_files/180px-EZ430-RF2500-SEH.png" width="180" height="108" class="thumbimage"></a>  <div class="thumbcaption"><div class="magnify"><a href="http://processors.wiki.ti.com/index.php/File:EZ430-RF2500-SEH.png" class="internal" title="Enlarge"><img src="./SensorTag User Guide - Texas Instruments Wiki_files/magnify-clip.png" width="15" height="11" alt=""></a></div>Energy Harvesting Kit</div></div></div> <br> 
+<p><a href="http://www.ti.com/tool/ez430-rf2500t" class="external text" rel="nofollow" target="_blank">EZ430-RF2500 development tool</a><br> <a href="http://www.ti.com/tool/cc2530zdk-znp-mini" class="external text" rel="nofollow" target="_blank">CC2530 ZigBee Network Processor development tool</a><br> There is an solar powered option as well:<br> <a href="http://www.ti.com/tool/ez430-rf2500-seh" class="external text" rel="nofollow" target="_blank">Solar Energy Harvesting kit</a><br> 
+</p><p><br>
+</p>
+<h1> <span class="mw-headline" id="SensorTag_Hardware"> SensorTag Hardware </span></h1>
+<p>The key components of the SensorTag is shown in the picture below.
+</p>
+<div class="floatnone"><a href="http://processors.wiki.ti.com/index.php/File:SensorTag_HW_with_arrows.png" class="image" title="SensorTag HW with arrows"><img alt="SensorTag HW with arrows" src="./SensorTag User Guide - Texas Instruments Wiki_files/300px-SensorTag_HW_with_arrows.png" width="300" height="300"></a></div><br>
+<p>The SensorTag reference design files including schematic and layout can be found <a href="http://www.ti.com/lit/zip/swrr109" class="external text" rel="nofollow" target="_blank">here</a><br>
+</p>
+<h2> <span class="mw-headline" id="Insert_Battery"> Insert Battery  </span></h2>
+<div class="thumb tright"><div class="thumbinner" style="width:182px;"><a href="http://processors.wiki.ti.com/index.php/File:SensorTag_insert_battery.png" class="image"><img alt="" src="./SensorTag User Guide - Texas Instruments Wiki_files/180px-SensorTag_insert_battery.png" width="180" height="104" class="thumbimage"></a>  <div class="thumbcaption"><div class="magnify"><a href="http://processors.wiki.ti.com/index.php/File:SensorTag_insert_battery.png" class="internal" title="Enlarge"><img src="./SensorTag User Guide - Texas Instruments Wiki_files/magnify-clip.png" width="15" height="11" alt=""></a></div>Inserting batteries</div></div></div>
+<p><b>Note!&nbsp;</b>When inserting battery the first time, the PCB contact point surface may have a thin layer of solder residue that may prevent contact to the battery. If the SensorTag is not working as expected please try to remove and insert the battery a few times to power the SensorTag. 
+</p>
+<h2> <span class="mw-headline" id="Side_Button"> Side Button  </span></h2>
+<div class="thumb tright"><div class="thumbinner" style="width:182px;"><a href="http://processors.wiki.ti.com/index.php/File:SensorTag_side_button.png" class="image"><img alt="" src="./SensorTag User Guide - Texas Instruments Wiki_files/180px-SensorTag_side_button.png" width="180" height="185" class="thumbimage"></a>  <div class="thumbcaption"><div class="magnify"><a href="http://processors.wiki.ti.com/index.php/File:SensorTag_side_button.png" class="internal" title="Enlarge"><img src="./SensorTag User Guide - Texas Instruments Wiki_files/magnify-clip.png" width="15" height="11" alt=""></a></div>SensorTag side button</div></div></div>
+<p>When not connected, this button is used to toggle advertising on and off. In pushed when in a connection, the connection is dropped, sensors reset and all data values are set to zero (Soft reset).
+</p><p><br>
+</p>
+<h2> <span class="mw-headline" id="LEDs"> LEDs </span></h2>
+<p>The D1 LED (Green) blinks when the device is advertising. (If lit, it is hung and a power cycle is needed)
+</p>
+<h2> <span class="mw-headline" id="Bluetooth_Low_Energy_Radio"> Bluetooth Low Energy Radio </span></h2>
+<p>The SensorTag includes a CC2541 Bluetooth Low Energy radio System on Chip with 256KB flash and 8KB RAM. The devices is preprogrammed with Bluetooth Low Energy software stack firmware for configuring the sensors and communicating with Bluetooth 4.0 enabled smartphones. The firmware is included in the <a href="http://www.ti.com/tool/ble-stack" class="external text" rel="nofollow" target="_blank">BLE stack v1.30</a> and newer. 
+</p><p>The datasheet for CC2541, reference designs, and appnotes can be found on the <a href="http://www.ti.com/product/cc2541" class="external text" rel="nofollow" target="_blank">CC2541 product page</a>. This page also includes complete schematic and design files for the SensorTag. 
+</p>
+<h2> <span class="mw-headline" id="Sensors"> Sensors </span></h2>
+<p>All sensors on the SensorTag are chosen to be small and low cost surface mount devices. The sensors use I2C interface and are connected to the same interface bus with seperate enable signals. To minimize current consumption all sensors are by default disabled and they are in sleep mode between measurements. Apps developers can enable and read data from one or several sensors and use the data to develop creative apps. The block diagram below shows the sensors and lists some potential apps that can be enabled using the sensors <br> 
+</p>
+<div class="thumb tnone"><div class="thumbinner" style="width:647px;"><a href="http://processors.wiki.ti.com/index.php/File:Bluetooth_SensorTag_block_diagram_power.png" class="image"><img alt="" src="./SensorTag User Guide - Texas Instruments Wiki_files/Bluetooth_SensorTag_block_diagram_power.png" width="645" height="368" class="thumbimage"></a>  <div class="thumbcaption">Bluetooth SensorTag block diagram</div></div></div> 
+<h3> <span class="mw-headline" id="Contactless_IR_Temperature_Sensor"> Contactless IR Temperature Sensor </span></h3>
+<p>The IR temp sensor temperature can measure the temperature of objects in front of the SensorTag with typical +/- 1C accuracy. The measurement distance depends on the size of the object to be measured. The datasheet recommends maximum distance of the radius/2. This means if the object has a radius of 1 meter, the distance from the object should be less than 50cm.<br> Note that polished and shiny metal surface objects cannot accurately be measured with the IR temperature sensor. To understand the theory of operation and how to use IR temperature sensor please see <a href="http://www.ti.com/product/tmp006" class="external text" rel="nofollow" target="_blank">TMP006 user guide</a> and this document describing different <a href="http://processors.wiki.ti.com/images/7/71/TMP006_Lens_Materials.pdf" class="internal" title="TMP006 Lens Materials.pdf"><span style="color: rgb(51,102,187)">lens materials</span></a>.
+</p>
+<h3> <span class="mw-headline" id="Accelerometer"> Accelerometer </span></h3>
+<p>The accelerometer measures acceleration in 3 axis with programmable resolution up to 14 bit. The accelerometer can also measure direction of gravity unlike a gyroscope that can only measure change of direction. More information about the KXTJ9 accelerometer can be found on the <a href="http://www.kionix.com/accelerometers/kxtj9" class="external text" rel="nofollow" target="_blank">Kionix web site</a><br> 
+</p>
+<h3> <span class="mw-headline" id="Humidity_Sensor"> Humidity Sensor </span></h3>
+<p>The humidity sensor reports the relative humidity (%RH) and temperature. This is an integrated 12-bit relative humidity sensor with a 14-bit temperature sensor. In order to ensure the best performance of relative humidity and temperature measurement, there are some basic rules of design-in. The sensor requires for direct contact with ambient air (like e.g. provided by a hole in the enclosure),  while at the same time the sensor should be airtight towards the inner volume of the device. Another basic rule is the thermal decoupling from hot spots on the electronic board, while allowing optimal thermal coupling towards the outside<br><br> Please be aware that the sensor, despite its robustness and long term stability, requires for some basic knowledge of handling while production and storage. More information about the optimal design-in “Design Guide Humidity Sensors”, the basic rules of handling for the sensor “Handling Instructions Humidity Sensors” and the SHT21 humidity sensor datasheet can be found on the <a href="http://www.sensirion.com/en/products/humidity-temperature/humidity-sensor-sht21" class="external text" rel="nofollow" target="_blank">Sensirion web site</a> and <a href="http://www.sensirion.com/en/products/humidity-temperature/download-center/" class="external text" rel="nofollow" target="_blank">Download center</a>
+</p>
+<h3> <span class="mw-headline" id="Magnetometer.2FCompass"> Magnetometer/Compass </span></h3>
+<p>The Magnetometer measures the magnetic field in 3 axis. The data from the magnetometer is usually combined with a accelerometer to make a compass. Magnetometers can be used to measure the earth's magnetic field but also to measure local magnetic field created from electronics. More information about the MAG3110 magnetometer can be found on the <a href="http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=MAG3110" class="external text" rel="nofollow" target="_blank">Freescale web site</a><br> 
+</p>
+<h3> <span class="mw-headline" id="Barometric_Pressure_Sensor"> Barometric Pressure Sensor </span></h3>
+<p>The pressure sensor measures the barometric air pressure. This is a 16-bit pressure sensor with 16-bit temperature reading. More information about the T5400 pressure sensor can be found in the <a href="http://www.epcos.com/inf/57/ds/T5400.pdf" class="external text" rel="nofollow" target="_blank">T5400 data sheet</a> and <a href="http://www.epcos.com/web/generator/Web/Sections/ProductCatalog/Sensors/PressureSensors/T5400-ApplicationNote,property=Data__en.pdf;/T5400_ApplicationNote.pdf" class="external text" rel="nofollow" target="_blank">Pressure Sensor appnote</a> 
+</p>
+<h3> <span class="mw-headline" id="Gyroscope"> Gyroscope </span></h3>
+<p>The gyroscope measures the rate of rotation in all 3 axes (X, Y, Z) with up to 16-bit resolution. Readings from the gyroscope can be combined with readings from the accelerometer to determine the orientation of the SensorTag in 3-D space.”
+More information about the IMU-3000 gyroscope can be found on the <a href="http://www.invensense.com/mems/gyro/imu3000.html" class="external text" rel="nofollow" target="_blank">Invensense web site</a><br>
+</p>
+<h2> <span class="mw-headline" id="EZ430_Battery_Pack_Interface"> EZ430 Battery Pack Interface </span></h2>
+<p>The P1 connector can be used to interface to EZ430 battery packs and USB sticks. This interface is primarily designed as a battery pack connector and not as a data interface. The UART interface is not supported in the SensorTag firmware. To use the interface a connector must be soldered to the board. The connector is type is BL SMD 91-06 U from <a href="http://www.mpe-connector.com/" class="external text" rel="nofollow" target="_blank">MPE Gerry</a><br> 
+</p>
+<table class="wikitable" style="text-align:left; width:30%;">
+<caption> P1 Connector Pinout
+</caption>
+<tbody><tr>
+<th scope="col"> P1 pin number
+</th><th scope="col"> Signal name
+</th></tr>
+<tr>
+<td> 1
+</td><td> TX/D0(Not supported in firmware)
+</td></tr>
+<tr>
+<td> 2
+</td><td> GND
+</td></tr>
+<tr>
+<td> 3
+</td><td> RESET
+</td></tr>
+<tr>
+<td> 4
+</td><td> TEST(Not supported in firmware)
+</td></tr>
+<tr>
+<td> 5
+</td><td> VDD_EXT
+</td></tr>
+<tr>
+<td> 6
+</td><td> RX/D0(Not supported in firmware)
+</td></tr></tbody></table>
+<h2> <span class="mw-headline" id="Debug_interface"> Debug interface  </span></h2>
+<p>For normal operation the SensorTag is configured by the smartphone App examples. If you are an advanced user you can use your own firmware on the SensorTag. A 2x5 pin 1.27 mm pitch header (J1) is used for programming and debugging the SensorTag. The pinout of this connector is shown below. The CC2541 can be programmed with a [<a href="http://http//focus.ti.com/docs/toolsw/folders/print/cc-debugger.html" class="external text" rel="nofollow" target="_blank">CC debugger</a>]. When using the CC debugger, notice the small pin 1 marking on the connector.<br> <b>Note that while using the CC debugger the SensorTag is powered from the coin cell battery. During debugging the current consumption is higher than many batteries can support. It is recommended to use external power while debugging</b><br> 
+</p>
+<table class="wikitable" style="text-align:left; width:35%;">
+<caption> Debug Connector Pinout
+</caption>
+<tbody><tr>
+<th scope="col"> Signal name
+</th><th scope="col"> Pin #
+</th><th scope="col"> Pin #
+</th><th scope="col"> Signal name
+</th></tr>
+<tr>
+<td> GND
+</td><td> 1
+</td><td> 2
+</td><td> VDD
+</td></tr>
+<tr>
+<td> DC
+</td><td> 3
+</td><td> 4
+</td><td> DD
+</td></tr>
+<tr>
+<td> CSN
+</td><td> 5
+</td><td> 6
+</td><td> SCLK
+</td></tr>
+<tr>
+<td> EM_RESET
+</td><td> 7
+</td><td> 8
+</td><td> MOSI
+</td></tr>
+<tr>
+<td> NC
+</td><td> 9
+</td><td> 10
+</td><td> MISO
+</td></tr></tbody></table>
+<h1> <span class="mw-headline" id="SensorTag_Software"> SensorTag Software </span></h1>
+<p>The SensorTag is a BLE peripheral slave device based on CC2541 hardware platform including five peripheral sensors with a complete software solution for sensor drivers interfaced to a GATT server running on TI BLEv1.2 stack. The GATT server contains a primary service for each sensor for configuration and data collection. 
+</p>
+<h2> <span class="mw-headline" id="Operation"> Operation  </span></h2>
+<p>On startup, the SensorTag is advertising with a 100ms interval. The connection is established by a Central Device and the sensors can then be configured to provide measurement data. The Central Device could be any BLE compliant device and the main focus is on BLE compliant mobile phones, running either Andriod or iOS. The central device should be able to 
+</p>
+<ul><li>Scan and discover the Sensor Tag. (Scan response contain name “SensorTag”) 
+</li><li>Establish connection based on user defined Connection Parameters 
+</li><li>Perform Service Discovery – Discover Characteristic by UUID 
+</li><li>Operate as a GATT Client - Write to and read from Characteristic Value
+</li></ul>
+<p>The Central Device shall initiate the connection and thereby become the Master. 
+</p><p>To obtain the data, the corresponding sensor must first be activated, which is done via a Characteristic Value write to appropriate service. 
+</p><p>The most power efficient way to obtain measurements for a sensor is to 
+</p>
+<ol><li>Enable notification 
+</li><li>Enable Sensor 
+</li><li>When notification with data is obtained at the Master side, disable the sensor (notification still on though)
+</li></ol>
+<p>Alternative do not use notifications at all, then simply 
+</p>
+<ol><li>Enable sensor 
+</li><li>Read data and verify 
+</li><li>Disable sensor
+</li></ol>
+<p>For the latter alternative please keep in mind that sensor take different amount of time to perform measurement. Depending on the connection interval (~10 – 4000 ms) set by the Central Device, the time for achieving measurement data can vary. The individual sensors require varying delays to complete measurements. Recommended setting is 100ms but for fast accelerometer and Magnetometer data updates, a lower is necessary. Notifications can be stopped and the sensors turned on/off 
+</p><p><br>
+</p>
+<h2> <span class="mw-headline" id="Sensors_2"> Sensors </span></h2>
+<p>The SensorTag has support for the following sensors: 
+</p>
+<ul><li>IR Temperature, both object and ambient temperature 
+</li><li>Accelerometer, 3 axis 
+</li><li>Humidity, both relative humidity and temperature 
+</li><li>Magnetometer, 3 axis 
+</li><li>Barometer, both pressure and temperature 
+</li><li>Gyroscope, 3 axis
+</li></ul>
+<table class="wikitable" style="text-align:left; width:50%;">
+<caption> Sensor Overview
+</caption>
+<tbody><tr>
+<th scope="col"> Sensor
+</th><th scope="col"> Name
+</th><th scope="col"> Update
+</th><th scope="col"> Size per Update
+</th><th scope="col"> I2C Address
+</th><th scope="col"> I2C Speed
+</th></tr>
+<tr>
+<td> IR Temperature
+</td><td> TMP006
+</td><td> &gt;250 ms
+</td><td> 2 x 16bit
+</td><td> 0x44
+</td><td> &lt;3.4 MHz
+</td></tr>
+<tr>
+<td> Accelerometer
+</td><td> KXTJ9
+</td><td> &gt;20 ms
+</td><td> 3 x 8bit
+</td><td> 0x0F
+</td><td> &lt;400 kHz
+</td></tr>
+<tr>
+<td> Gyroscope
+</td><td> IMU-3000
+</td><td> &gt;0.125 ms
+</td><td> 3 x 16 bit
+</td><td> 0x68
+</td><td> &lt;3.4 MHz
+</td></tr>
+<tr>
+<td> Humidity
+</td><td> SHT21
+</td><td> N/A
+</td><td> 2 x 16bit
+</td><td> 0x40
+</td><td> &lt;400 kHz
+</td></tr>
+<tr>
+<td> Pressure
+</td><td> T5400(C953A)
+</td><td> &gt;2 ms
+</td><td> 2 x 16bit
+</td><td> 0x77
+</td><td> &lt;3.4 MHz
+</td></tr>
+<tr>
+<td> Compass
+</td><td> MAG3110
+</td><td> &gt;12 ms
+</td><td> 3 x 16bit
+</td><td> 0x0E
+</td><td> &lt;400 kHz
+</td></tr></tbody></table>
+<p>The SensorTag uses I2C to interface to all sensors.<br> The SensorTag can be configured to send notifications for every sensor by writing “01 00” to the characteristic configuration &lt; GATT_CLIENT_CHAR_CFG_UUID&gt; for the corresponding sensor data, the data is then sent as soon as the data has been updated. The sensors are enabled by writing 0x01 to the corresponding Configuration and then disabled by writing 0x00<br> The SensorTag does not use any interrupt features provided by the sensors
+</p>
+<h2> <span class="mw-headline" id="Gatt_Server"> Gatt Server </span></h2>
+<p>The GATT server contains several services and following are used: 
+</p>
+<ul><li>GAP 
+</li><li>GATT 
+</li><li>Device Information 
+</li><li>IR Temperature 
+</li><li>Accelerometer 
+</li><li>Humidity 
+</li><li>Magnetometer 
+</li><li>Barometer 
+</li><li>Gyroscope 
+</li><li>Simple Keys 
+</li><li>Test
+</li><li>OAD Service
+</li></ul>
+<p>Device Information Service is aligned to official SIG profiles, whilst the other serves as examples of profile service implementation. This document should be read together with <a href="http://processors.wiki.ti.com/index.php/File:BLE_SensorTag_GATT_Server.pdf" title="File:BLE SensorTag GATT Server.pdf">File:BLE SensorTag GATT Server.pdf</a>. The sensor specific services are included in a sensor profile. The sensor profile is a custom profile with 16bit unique UUIDs. The profile enables a device that has a set of specific sensors to expose status and data measurements to another device. The profile also provides configuration interface to the individual sensors.
+</p><p>The TI Base 128-bit UUID is: <b>F0000000-0451-4000-B000-000000000000</b>. Alle sensor services use 128-bit UUIDs, but for practical reasons only the 16-bit part is listed below. This is embedded in the lower 16 bits of the 128-bit UUID. Example: 0xAA01 maps as F0000000-0451-4000-B000-00000000<b>AA01</b>. All UUIDs that are mapped to 128-bit values are marked *.
+</p>
+<h3> <span class="mw-headline" id="IR_Temperature_Sensor"> IR Temperature Sensor  </span></h3>
+<p>Texas Instruments TMP006 @ U5 Two types of data are obtained from the IR Temperature sensor: object temperature and ambient temperature. 
+</p>
+<table class="wikitable" style="text-align:left; width:70%;">
+<caption> IR Temperature Sensor
+</caption>
+<tbody><tr>
+<th scope="col"> Type
+</th><th scope="col"> UUID
+</th><th scope="col"> Handle
+</th><th scope="col"> Read/Write
+</th><th scope="col"> Format
+</th></tr>
+<tr>
+<td> &lt;Data&gt;
+</td><td> F000AA01 *
+</td><td> 0x25
+</td><td> Read/Notify
+</td><td> ObjLSB ObjMSB AmbLSB AmbMSB (4 bytes)
+</td></tr>
+<tr>
+<td> &lt;Data Notification&gt;
+</td><td>
+</td><td> 0x26
+</td><td> R/W
+</td><td> 2 bytes
+</td></tr>
+<tr>
+<td> &lt;Configuration&gt;
+</td><td> F000AA02 *
+</td><td> 0x2A
+</td><td> R/W
+</td><td> 1 byte
+</td></tr></tbody></table>
+<p>When the enable command is issued, the sensor starts to perform measurements each second (average over four measurements) and the data is stored in the &lt;Data&gt; each second as well. When the disable command is issued, the sensor is put in stand-by mode. To obtain data OTA either use notifications or read the data directly.
+</p><p><br> For more information please refer to <a href="http://www.ti.com/lit/ug/sbou107/sbou107.pdf" class="external text" rel="nofollow" target="_blank">TI TMP006 User's Guide</a> 
+</p><p>The raw data value read from this sensor are two unsigned 16 bit values, one for die temperature and one for object temperature. To convert to temperature in degrees (Celsius), use the algorithm below:
+</p><p><code>/*  Conversion algorithm for die temperature */
+</code></p><p><code>double calcTmpLocal(uint16 rawT)
+{
+</code></p><code>
+<pre> //-- calculate die temperature [Â°C] --
+ m_tmpAmb = (double)((qint16)rawT)/128.0; // Used in also in the calc. below
+</pre>
+<pre> return m_tmpAmb;
+</pre>
+<p>}
+</p><p>/* Conversion algorithm for target temperature */
+</p><p>double calcTmpTarget(uint16 rawT)
+{
+</p>
+<pre> //-- calculate target temperature [Â°C] -
+ double Vobj2 = (double)(qint16)rawT;
+ Vobj2 *= 0.00000015625;
+</pre>
+<pre> double Tdie2 = m_tmpAmb + 273.15;
+ const double S0 = 6.4E-14;            // Calibration factor
+</pre>
+<pre> const double a1 = 1.75E-3;
+ const double a2 = -1.678E-5;
+ const double b0 = -2.94E-5;
+ const double b1 = -5.7E-7;
+ const double b2 = 4.63E-9;
+ const double c2 = 13.4;
+ const double Tref = 298.15;
+ double S = S0*(1+a1*(Tdie2 - Tref)+a2*pow((Tdie2 - Tref),2));
+ double Vos = b0 + b1*(Tdie2 - Tref) + b2*pow((Tdie2 - Tref),2);
+ double fObj = (Vobj2 - Vos) + c2*pow((Vobj2 - Vos),2);
+ double tObj = pow(pow(Tdie2,4) + (fObj/S),.25);
+ tObj = (tObj - 273.15);
+</pre>
+<pre> return tObj;
+</pre>
+</code><p><code>}</code>
+</p>
+<h3> <span class="mw-headline" id="Accelerometer_2"> Accelerometer </span></h3>
+<p>Kionix KXTJ9 @ U7 3 axis data are read from the accelerometer<br> 
+</p>
+<table class="wikitable" style="text-align:left; width:70%;">
+<caption> Accelerometer
+</caption>
+<tbody><tr>
+<th scope="col"> Type
+</th><th scope="col"> UUID
+</th><th scope="col"> Handle
+</th><th scope="col"> Read/Write
+</th><th scope="col"> Format
+</th><th scope="col"> Description
+</th></tr>
+<tr>
+<td> &lt;Data&gt;
+</td><td> F000AA11 *
+</td><td> 0x2D
+</td><td> Read/Notify
+</td><td> X&nbsp;: Y&nbsp;: Z (3 bytes)
+</td><td>
+</td></tr>
+<tr>
+<td> &lt;Data Notification&gt;
+</td><td>
+</td><td> 0x2E
+</td><td> R/W
+</td><td> 2 bytes
+</td><td>
+</td></tr>
+<tr>
+<td> &lt;Configuration&gt;
+</td><td> F000AA12 *
+</td><td> 0x31
+</td><td> R/W
+</td><td> 1 byte
+</td><td>
+</td></tr>
+<tr>
+<td> &lt;Period&gt;
+</td><td> F000AA13 *
+</td><td> 0x34
+</td><td> R/W
+</td><td> 1 byte
+</td><td> Period = [Input*10]ms
+</td></tr></tbody></table>
+<p>When the enable command is issued, the sensor starts to perform measurements each second and the data is stored in &lt;Data&gt; each second as well. When the disable command is issued, the sensor is put to sleep. To obtain data OTA either use notifications or read the data directly.
+The default period for the data is one second, which can be changed by writing to the &lt;Period&gt; (unit 10 ms). Range is set to +/-2g. For more information please refer to <a href="http://www.kionix.com/accelerometers/kxtj9" class="external text" rel="nofollow" target="_blank">Kionix KXTJ9 Data sheet</a>.
+</p><p>For conversion from raw data to G, use this algorithm:<br><br>
+<code>float calcAccel(int8 rawX)
+{
+</code></p><code>
+<pre> float v;
+</pre>
+<pre> //-- calculate acceleration, unit G, range -2, +2
+ v = (rawX * 1.0) / (256 / 4);
+</pre>
+<pre> return v;
+</pre>
+</code><p><code>}</code>
+</p>
+<h3> <span class="mw-headline" id="Humidity_Sensor_2"> Humidity Sensor </span></h3>
+<p>Sensirion SHT21 @ U6 Two types of data are obtained from the Humidity sensor, relative humidity and ambient temperature<br> 
+</p>
+<table class="wikitable" style="text-align:left; width:70%;">
+<caption> Humidity Sensor
+</caption>
+<tbody><tr>
+<th scope="col"> Type
+</th><th scope="col"> UUID
+</th><th scope="col"> Handle
+</th><th scope="col"> Read/Write
+</th><th scope="col"> Format
+</th></tr>
+<tr>
+<td> &lt;Data&gt;
+</td><td> F000AA21 *
+</td><td> 0x38
+</td><td> Read/Notify
+</td><td> TempLSB TempMSB HumLSB HumMSB (4 bytes)
+</td></tr>
+<tr>
+<td> &lt;Data Notification&gt;
+</td><td>
+</td><td> 0x39
+</td><td> R/W
+</td><td> 2 bytes
+</td></tr>
+<tr>
+<td> &lt;Configuration&gt;
+</td><td> F000AA22 *
+</td><td> 0x3C
+</td><td> R/W
+</td><td> 1 byte
+</td></tr></tbody></table>
+<p>The driver for this sensor is using a state machine so when the enable command is issued, the sensor starts to perform one measurements and the data is stored in the &lt;Data&gt;. To obtain data OTA either use notifications or read the data directly.  The humidity and temperature data in the sensor is issued and measured explicitly where the humidity data takes ~64ms to measure. The update rate is one second.<br>
+</p><p>The humidity and temperature data in the sensor is issued and measured explicitly where the humidity data takes ~64ms to measure. For more information please refer to <a href="http://www.sensirion.com/en/pdf/product_information/Datasheet-humidity-sensor-SHT21.pdf" class="external text" rel="nofollow" target="_blank">Sensirion SHT21 data sheet</a>
+</p><p>Conversion to temperature and relative humidity is done as follows:<br><br>
+<code>/* Conversion algorithm, temperature */
+</code></p><p><code>double calcHumTmp(uint16 rawT)
+{
+</code></p><code>
+<pre> double v;
+</pre>
+<pre> //-- calculate temperature [deg C] --
+ v = -46.85 + 175.72/65536 *(double)(qint16)rawT;
+</pre>
+<pre> return v;
+</pre>
+<p>}
+</p><p>/*  Conversion algorithm, humidity */
+</p><p>double calcHumRel(uint16 rawH)
+{
+</p>
+<pre> double v;
+</pre>
+<pre> rawH &amp;= ~0x0003; // clear bits [1..0] (status bits)
+ //-- calculate relative humidity [%RH] --
+ v = -6.0 + 125.0/65536 * (double)rawH; // RH= -6 + 125 * SRH/2^16
+</pre>
+<pre> return v;
+</pre>
+</code><p><code>}</code>
+</p>
+<h3> <span class="mw-headline" id="Magnetometer"> Magnetometer </span></h3>
+<p>Freescale MAG3110 @ U3 3 axis data are obtained from the magnetometer<br> 
+</p>
+<table class="wikitable" style="text-align:left; width:70%;">
+<caption> Magnetometer
+</caption>
+<tbody><tr>
+<th scope="col"> Type
+</th><th scope="col"> UUID
+</th><th scope="col"> Handle
+</th><th scope="col"> Read/Write
+</th><th scope="col"> Format
+</th><th scope="col"> Description
+</th></tr>
+<tr>
+<td> &lt;Data&gt;
+</td><td> F000AA31 *
+</td><td> 0x40
+</td><td> Read/Notify
+</td><td> XLSB XMSB YLSB YMSB ZLSB ZMSB
+</td><td>
+</td></tr>
+<tr>
+<td> &lt;Data Notification&gt;
+</td><td>
+</td><td> 0x41
+</td><td> R/W
+</td><td> 2 bytes
+</td><td>
+</td></tr>
+<tr>
+<td> &lt;Configuration&gt;
+</td><td> F000AA32 *
+</td><td> 0x44
+</td><td> R/W
+</td><td> 1 byte
+</td><td>
+</td></tr>
+<tr>
+<td> &lt;Period&gt;
+</td><td> F000AA33 *
+</td><td> 0x47
+</td><td> R/W
+</td><td> 1 byte
+</td><td> Period = [Input]ms
+</td></tr></tbody></table>
+<p>When the enable command is issued, the sensor starts to perform measurements each second and the data is stored in &lt;Data&gt; each second as well. When the disable command is issued, the sensor is put to sleep. To obtain data OTA either use notifications or read the data directly. 
+</p><p>The default period for the data is 2s, which can be changed by writing to the &lt;Period&gt;. 
+</p><p>The sensor is set to an output rate of 10 Hz with an over sampling ratio of 1. Through the source code, the sensor is configurable from 0.08-80 Hz with an over sampling rate of 1-8. For more information please refer to <a href="http://cache.freescale.com/files/sensors/doc/fact_sheet/MAG3110FS.pdf" class="external text" rel="nofollow" target="_blank">Freescale MAG3110 datasheet</a>
+</p><p>Use the following algorithm top convert from raw values to uTesla (uT):<br><br>
+<code>/* Converting to microTeslas */
+</code></p><p><code>float calcMagn(int16 rawX)
+{
+</code></p><code>
+<pre> float v;
+</pre>
+<pre> //-- calculate magnetic force, unit uT, range -1000, +1000
+ v = (rawX * 1.0) / (65536/2000);
+</pre>
+<pre> return v;
+</pre>
+</code><p><code>}</code>
+</p>
+<h3> <span class="mw-headline" id="Barometric_Pressure_Sensor_2"> Barometric Pressure Sensor </span></h3>
+<p>Epcos T5400-C953 @ U4 Two types of data are obtained from the Barometric Pressure Sensor: pressure and ambient temperature<br> 
+</p>
+<table class="wikitable" style="text-align:left; width:70%;">
+<caption> Barometric Pressure Sensor
+</caption>
+<tbody><tr>
+<th scope="col"> Type
+</th><th scope="col"> UUID
+</th><th scope="col"> Handle
+</th><th scope="col"> Read/Write
+</th><th scope="col"> Format
+</th></tr>
+<tr>
+<td> &lt;Data&gt;
+</td><td> F000AA41 *
+</td><td> 0x4B
+</td><td> Read only
+</td><td> TempLSB TempMSB PressLSB PressMSB (4 bytes)
+</td></tr>
+<tr>
+<td> &lt;Data Notification&gt;
+</td><td>
+</td><td> 0x4C
+</td><td> R/W
+</td><td> 2 bytes
+</td></tr>
+<tr>
+<td> &lt;Configuration&gt;
+</td><td> F000AA42 *
+</td><td> 0x4F
+</td><td> R/W
+</td><td> 1 byte
+</td></tr>
+<tr>
+<td> &lt;Calibration&gt;
+</td><td> F000AA43 *
+</td><td> 0x52
+</td><td> Read only
+</td><td> C1LSB C1MSB…C8LSB C8MSB (16 bytes)
+</td></tr></tbody></table>
+<p>The driver for this sensor is using a state machine so when the enable command is issued, the sensor starts to perform one measurements and the data is stored in the &lt;Data&gt;. To obtain data OTA either use notifications or read the data directly. Note that only one notification will be sent since only one measurement is performed 
+</p><p>For calculation, the 8 16-bit pairs of calibration values are needed which is read from sensor and stored in the &lt;Calibration&gt; by writing “02” to &lt;Configuration&gt;. The Calibration values are obtained by either read from &lt;Calibration&gt; or if notification has been enabled automatically sent when available.
+</p><p>Conversion from raw data to temperature and hP (hecto-pascal) is achieved with the following conversion:
+<br><br>
+<code>/*  Conversion algorithm for barometer temperature
+</code></p><code>
+<pre>* 
+*  Formula from application note, rev_X:
+*  Ta = ((c1 * Tr) / 2^24) + (c2 / 2^10)
+*
+*  c1 - c8: calibration coefficients the can be read from the sensor
+*  c1 - c4: unsigned 16-bit integers
+*  c5 - c8: signed 16-bit integers
+*/
+</pre>
+<p>double calcBarTmp(uint16 rawT)
+{
+</p>
+<pre> uint16 c1, c2;
+</pre>
+<pre> c1 = m_barCalib.c1;
+ c2 = m_barCalib.c2;
+ m_raw_temp = rawT;
+</pre>
+<pre> int64 temp, val;
+ val = ((int64)(c1 * m_raw_temp) * 100);
+ temp = (val &gt;&gt; 24);
+ val = ((int64)c2 * 100);
+ temp += (val &gt;&gt; 10);
+</pre>
+<pre> return ((double)temp) / 100;
+</pre>
+<p>}
+</p><p>/* Conversion algorithm for barometer pressure (hPa)
+</p>
+<pre>* 
+* Formula from application note, rev_X:
+* Sensitivity = (c3 + ((c4 * Tr) / 2^17) + ((c5 * Tr^2) / 2^34))
+* Offset = (c6 * 2^14) + ((c7 * Tr) / 2^3) + ((c8 * Tr^2) / 2^19)
+* Pa = (Sensitivity * Pr + Offset) / 2^14
+*/
+</pre>
+<p>double TcalcBarPress(uint16 rawT)
+{
+</p>
+<pre> int64 s, o, pres, val;
+ uint16 c3, c4;
+ int16 c5, c6, c7, c8;
+ uint16 Pr;
+ int16 Tr;
+</pre>
+<pre> Pr = rawT;
+ Tr = m_raw_temp;
+ c3 = m_barCalib.c3;
+ c4 = m_barCalib.c4;
+ c5 = m_barCalib.c5;
+ c6 = m_barCalib.c6;
+ c7 = m_barCalib.c7;
+ c8 = m_barCalib.c8;
+</pre>
+<pre> // Sensitivity
+ s = (int64)c3;
+ val = (int64)c4 * Tr;
+ s += (val &gt;&gt; 17);
+ val = (int64)c5 * Tr * Tr;
+ s += (val &gt;&gt; 34);
+</pre>
+<pre> // Offset
+ o = (int64)c6 &lt;&lt; 14;
+ val = (int64)c7 * Tr;
+ o += (val &gt;&gt; 3);
+ val = (int64)c8 * Tr * Tr;
+ o += (val &gt;&gt; 19);
+</pre>
+<pre> // Pressure (Pa)
+ pres = ((int64)(s * Pr) + o) &gt;&gt; 14;
+</pre>
+<pre> return (double)pres/100;
+</pre>
+<p>}
+</p>
+<pre>#define BUILD_UINT16(loByte, hiByte) ((uint16)(((loByte) &amp; 0x00FF) + (((hiByte) &amp; 0x00FF) &lt;&lt; 8)))
+</pre>
+<p>void storeCalibrationData(uint8 *pData)
+{
+</p>
+<pre> m_barCalib.c1 = BUILD_UINT16(pData[0],pData[1]);
+ m_barCalib.c2 = BUILD_UINT16(pData[2],pData[3]);
+ m_barCalib.c3 = BUILD_UINT16(pData[4],pData[5]);
+ m_barCalib.c4 = BUILD_UINT16(pData[6],pData[7]);
+ m_barCalib.c5 = BUILD_UINT16(pData[8],pData[9]);
+ m_barCalib.c6 = BUILD_UINT16(pData[10],pData[11]);
+ m_barCalib.c7 = BUILD_UINT16(pData[12],pData[13]);
+ m_barCalib.c8 = BUILD_UINT16(pData[14],pData[15]);
+</pre>
+</code><p><code>}</code>
+</p>
+<h3> <span class="mw-headline" id="Gyroscope_2"> Gyroscope </span></h3>
+<p>Invensense IMU-3000 @ U8 3 axis data are obtained from the gyroscope<br> 
+</p>
+<table class="wikitable" style="text-align:left; width:70%;">
+<caption> Gyroscope
+</caption>
+<tbody><tr>
+<th scope="col"> Type
+</th><th scope="col"> UUID
+</th><th scope="col"> Handle
+</th><th scope="col"> Read/Write
+</th><th scope="col"> Format
+</th></tr>
+<tr>
+<td> &lt;Data&gt;
+</td><td> F000AA51 *
+</td><td> 0x57
+</td><td> Read Only
+</td><td> XLSB XMSB YLSB YMSB ZLSB ZMSB
+</td></tr>
+<tr>
+<td> &lt;Data Notification&gt;
+</td><td>
+</td><td> 0x58
+</td><td> R/W
+</td><td> 2 bytes
+</td></tr>
+<tr>
+<td> &lt;Configuration&gt;
+</td><td> F000AA52 *
+</td><td> 0x5B
+</td><td> R/W
+</td><td> 1 byte
+</td></tr></tbody></table>
+<p>The driver for the Gyroscope sensor produces data every second. Data are obtained over the air either by direct read or by notifications. For more information please see <a href="http://invensense.com/mems/gyro/imu3000.html" class="external text" rel="nofollow" target="_blank">Invensense IMU-3000 datasheet</a>.
+<br><br>
+<code>/* Converting from raw data to degrees/second.
+</code></p><p><code>float calcGyro(int16 rawX)
+{
+</code></p><code>
+<pre> float v;
+</pre>
+<pre> //-- calculate rotation, unit deg/s, range -250, +250
+ v = (rawX * 1.0) / (65536/ 500);
+</pre>
+<pre> return v;
+</pre>
+</code><p><code>}</code>
+</p>
+<h3> <span class="mw-headline" id="Test_Service"> Test Service  </span></h3>
+<table class="wikitable" style="text-align:left; width:70%;">
+<caption> Test Service
+</caption>
+<tbody><tr>
+<th scope="col"> Type
+</th><th scope="col"> UUID
+</th><th scope="col"> Handle
+</th><th scope="col"> Read/Write
+</th><th scope="col"> Format
+</th></tr>
+<tr>
+<td> &lt;Data&gt;
+</td><td> F000AA61 *
+</td><td> 0x64
+</td><td> Read Only
+</td><td> 2 bytes, power on self-test result
+</td></tr>
+<tr>
+<td> &lt;Configuration&gt;
+</td><td> F000AA62 *
+</td><td> 0x67
+</td><td> R/W
+</td><td> 1 byte
+</td></tr></tbody></table>
+<p>At start-up a communication test is performed on each sensor. Its purpose is to test the communication between the CC2541 and the sensor over the I2C-bus. This is not a functional test; it checks the value of selected registers against known values and also verifies that writes to registers are performed correctly. The test result is available as a 16-bit wide characteristic. One bit is set for each self-test that passes. 
+</p>
+<table class="wikitable" style="text-align:left; width:70%;">
+<caption> Test Service
+</caption>
+<tbody><tr>
+<th scope="col"> Bit Number
+</th><th scope="col"> Description
+</th></tr>
+<tr>
+<td> 0
+</td><td> IR temperature sensor test
+</td></tr>
+<tr>
+<td> 1
+</td><td> Humidity sensor test
+</td></tr>
+<tr>
+<td> 2
+</td><td> Magnetometer sensor test
+</td></tr>
+<tr>
+<td> 3
+</td><td> Accelerometer sensor test
+</td></tr>
+<tr>
+<td> 4
+</td><td> Pressure sensor test
+</td></tr>
+<tr>
+<td> 6
+</td><td> Gyroscope test
+</td></tr>
+<tr>
+<td> 6-15
+</td><td> Reserved for future use
+</td></tr></tbody></table>
+<p>The test service offers two distinct functionalities.
+</p>
+<h4> <span class="mw-headline" id="Power_on_Self_Test"> Power on Self Test </span></h4>
+<p>The self-test result is available over the air in the DATA field of the Test Service. It is accessed by direct reading. Note that this is the value of the power-on self test. It should always show the value <b>0x3F</b>.
+</p>
+<h4> <span class="mw-headline" id="Test_Mode"> Test Mode </span></h4>
+<p>The Sensor Tag can also be put in a Test Mode. This functionality is used access the two LEDs on the board and also to test the three keys. The device is put in test mode by setting bit 7 of the CONFIGURATION field of the Test Service. In this mode the normal operation of the keys and LEDs are disabled. The LEDs are turned on by setting bit 0 and 1 respectively 
+</p><p>Testing the keys is done by enabling notifications in the Simple Key service. The side key sets bit 2, the left key bit 1 and the right key bit 0. 
+</p><p>Typically sequence for testing the keys and LEDs.
+</p>
+<ol><li> Enable test mode by writing the value 0x80 to the AA62 (CONFIGURATION) attribute.
+</li><li> Enable Simple keys notification
+</li><li> Observe the notification data that results from a sequence of key presses, releases
+</li><li> Write 0x81 to AA62 to blink LED D1
+</li><li> Write 0x82 to AA62 to blink LED D2
+</li><li> Write 0x00 to AA62 to turn of LEDs and exit test mode
+</li></ol>
+<h3> <span class="mw-headline" id="Simple_Key_Service"> Simple Key Service </span></h3>
+<table class="wikitable" style="text-align:left; width:70%;">
+<caption> Simple Key Service
+</caption>
+<tbody><tr>
+<th scope="col"> Type
+</th><th scope="col"> UUID
+</th><th scope="col"> Handle
+</th><th scope="col"> Read/Write
+</th><th scope="col"> Format
+</th></tr>
+<tr>
+<td> &lt;Data&gt;
+</td><td> F000FFE1
+</td><td> 0x5F
+</td><td> Read Only
+</td><td> Bit 2: side key, Bit 1- right key, Bit 0 –left key
+</td></tr></tbody></table>
+<p>The Simple Key service is used to enable notifications for key hits on the sensor tag. Note that the side key will only provided notifications in test mode, as it is normally used to disconnect a connected device or toggle advertising on/off.
+</p>
+<h3> <span class="mw-headline" id="OAD_.28Over-the-Air_Download.29_Service"> OAD (Over-the-Air Download) Service </span></h3>
+<p>The Over-the-air firmware download (OAD) feature is included in the SensorTag. The feature allows a peer device or OAD manager (which could be a central BT Smart device such as a smartphone) to push a new firmware image onto the SensorTag (OAD target) and update the firmware. This feature uses the Boot Image Manger (BIM), in which case the downloaded image gets stored in the opposite flash location as the currently running image.
+</p><p>For example, if the "A" image is the current image and is used to perform the download, then the downloaded image becomes the "B" image. Upon reset, the "B" image with the updated firmware would be loaded. The OAD feature optionally allows for the firmware image to be signed (using AES). The App will not allow you to overwrite an existing active image.
+</p>
+<div class="thumb tnone"><div class="thumbinner" style="width:302px;"><a href="http://processors.wiki.ti.com/index.php/File:OAD_ImgA_ImgB.png" class="image"><img alt="" src="./SensorTag User Guide - Texas Instruments Wiki_files/300px-OAD_ImgA_ImgB.png" width="300" height="172" class="thumbimage"></a>  <div class="thumbcaption"><div class="magnify"><a href="http://processors.wiki.ti.com/index.php/File:OAD_ImgA_ImgB.png" class="internal" title="Enlarge"><img src="./SensorTag User Guide - Texas Instruments Wiki_files/magnify-clip.png" width="15" height="11" alt=""></a></div>Brief Overview of OAD Systems</div></div></div>
+<p>For more detailed information check out the <a href="http://processors.wiki.ti.com/images/8/82/OAD_for_CC254x.pdf" class="external text" rel="nofollow" target="_blank">Developer's Guide for Over Air Download for CC254x</a>.
+</p><p><br>
+</p>
+<h4> <span class="mw-headline" id="OAD_using_the_SensorTag_App"> OAD using the SensorTag App </span></h4>
+<p>Open the profiles section and select TI OAD Profile, when selecting OAD all the other profiles will be turned off.
+</p>
+<table class="gallery" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td><div class="gallerybox" style="width: 155px;">
+			<div class="thumb" style="padding: 13px 0; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://processors.wiki.ti.com/index.php/File:Profiles_selection.PNG" class="image"><img alt="" src="./SensorTag User Guide - Texas Instruments Wiki_files/80px-Profiles_selection.PNG" width="80" height="120"></a></div></div>
+			<div class="gallerytext">
+<p>Select OAD profile
+</p>
+			</div>
+		</div></td>
+		<td><div class="gallerybox" style="width: 155px;">
+			<div class="thumb" style="padding: 13px 0; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://processors.wiki.ti.com/index.php/File:Enable_OAD_Profile.PNG" class="image"><img alt="" src="./SensorTag User Guide - Texas Instruments Wiki_files/80px-Enable_OAD_Profile.PNG" width="80" height="120"></a></div></div>
+			<div class="gallerytext">
+<p>OAD profile selected
+</p>
+			</div>
+		</div></td>
+	</tr>
+</tbody></table>
+<p><br>
+</p><p>The OAD profile window will open when the OAD profile is selected. Click on Upload Image and select 'Internal Image' or 'Shared files'. Internal Image is the SensorTag images that are delivered with the app. If you want to upload your own image, from for instance an e-mail, select shared files and select the appropriate image to upload to the SensorTAg.
+</p>
+<table class="gallery" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td><div class="gallerybox" style="width: 155px;">
+			<div class="thumb" style="padding: 13px 0; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://processors.wiki.ti.com/index.php/File:OAD_Upload_Image.PNG" class="image"><img alt="" src="./SensorTag User Guide - Texas Instruments Wiki_files/80px-OAD_Upload_Image.PNG" width="80" height="120"></a></div></div>
+			<div class="gallerytext">
+<p>TI OAD profile
+</p>
+			</div>
+		</div></td>
+		<td><div class="gallerybox" style="width: 155px;">
+			<div class="thumb" style="padding: 13px 0; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://processors.wiki.ti.com/index.php/File:Select_OAD_Image.PNG" class="image"><img alt="" src="./SensorTag User Guide - Texas Instruments Wiki_files/80px-Select_OAD_Image.PNG" width="80" height="120"></a></div></div>
+			<div class="gallerytext">
+<p>Select location
+</p>
+			</div>
+		</div></td>
+	</tr>
+</tbody></table>
+<p><br>
+</p><p>If 'Internal Images' is selected, an image for location A and an image for location B is provided. By default the image that is loaded to the SensorTag is stored in location A, therefore select SensorTagImgB to upload a new image to the SensorTag. If you select an image that corresponds to the same location as the existing image on the SensorTag  an error message will appear and you are asked to select another image. 
+</p>
+<table class="gallery" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td><div class="gallerybox" style="width: 155px;">
+			<div class="thumb" style="padding: 13px 0; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://processors.wiki.ti.com/index.php/File:OAD_ImgA_IImgB_Selection.PNG" class="image"><img alt="" src="./SensorTag User Guide - Texas Instruments Wiki_files/80px-OAD_ImgA_IImgB_Selection.PNG" width="80" height="120"></a></div></div>
+			<div class="gallerytext">
+<p>Select image
+</p>
+			</div>
+		</div></td>
+		<td><div class="gallerybox" style="width: 155px;">
+			<div class="thumb" style="padding: 13px 0; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://processors.wiki.ti.com/index.php/File:OAD_Wrong_Img.PNG" class="image"><img alt="" src="./SensorTag User Guide - Texas Instruments Wiki_files/80px-OAD_Wrong_Img.PNG" width="80" height="120"></a></div></div>
+			<div class="gallerytext">
+<p>Wrong flash location
+</p>
+			</div>
+		</div></td>
+	</tr>
+</tbody></table>
+<p><br>
+</p><p>When a correct image is selected the SensorTag app will upload the new image to the SensorTag. Due to the limited packet size in Bluetooth low energy and the Smartphone connection interval settings the OAD process takes approximately 3 minutes. Make sure to keep the SensorTag in range of the Smartphone during the OAD process. 
+</p>
+<table class="gallery" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td><div class="gallerybox" style="width: 155px;">
+			<div class="thumb" style="padding: 13px 0; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://processors.wiki.ti.com/index.php/File:OAD_Upload.PNG" class="image"><img alt="" src="./SensorTag User Guide - Texas Instruments Wiki_files/80px-OAD_Upload.PNG" width="80" height="120"></a></div></div>
+			<div class="gallerytext">
+<p>Uploading of a new image
+</p>
+			</div>
+		</div></td>
+	</tr>
+</tbody></table>
+<p>When a new firmware has been successfully uploaded to the SensorTag it will need a few seconds to install the firmware. When ready the LED on the SensorTag will blink once and the SensorTag is reset and ready to use with the new firmware. If the OAD procedure, for some reason, should be aborted the SensorTag will just continue to use the old firmware and the OAD procedure needs to be re-started.
+<br>
+</p>
+<h4> <span class="mw-headline" id="OAD_using_BLE_Device_Monitor"> OAD using BLE Device Monitor </span></h4>
+<p>A new firmware can be uploaded using the BLE Device Monitor. Follow the connection set up in the <a href="http://http//processors.wiki.ti.com/index.php/BLE_Device_Monitor_User_Guide" class="external text" rel="nofollow" target="_blank">BLE Device Monitor User Guide</a>. When the SensorTag is connected to the BLE Device Monitor select 'File' and 'Program (OAD)'. 
+</p>
+<table class="gallery" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td><div class="gallerybox" style="width: 155px;">
+			<div class="thumb" style="padding: 29px 0; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://processors.wiki.ti.com/index.php/File:BLE_Devvice_Monitor_OAD.png" class="image"><img alt="" src="./SensorTag User Guide - Texas Instruments Wiki_files/120px-BLE_Devvice_Monitor_OAD.png" width="120" height="87"></a></div></div>
+			<div class="gallerytext">
+<p>OAD - BLE Device Monitor
+</p>
+			</div>
+		</div></td>
+	</tr>
+</tbody></table>
+<p><br>
+In the SensorTag packaged two different SensorTag images are available, the default location is \\Program Files\Texas Instruments\BLE Device Monitor\firmware. Select SensorTagImgB and click 'start' to start uploading the new image to the SensorTag.
+</p>
+<table class="gallery" cellspacing="0" cellpadding="0">
+	<tbody><tr>
+		<td><div class="gallerybox" style="width: 155px;">
+			<div class="thumb" style="padding: 32px 0; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://processors.wiki.ti.com/index.php/File:BLE_Device_Monitor_select_OAD_image.png" class="image"><img alt="" src="./SensorTag User Guide - Texas Instruments Wiki_files/120px-BLE_Device_Monitor_select_OAD_image.png" width="120" height="81"></a></div></div>
+			<div class="gallerytext">
+<p>Selecting image
+</p>
+			</div>
+		</div></td>
+		<td><div class="gallerybox" style="width: 155px;">
+			<div class="thumb" style="padding: 32px 0; width: 150px;"><div style="margin-left: auto; margin-right: auto; width: 120px;"><a href="http://processors.wiki.ti.com/index.php/File:BLE_Device_Monitor_uploading_OAD_image.png" class="image"><img alt="" src="./SensorTag User Guide - Texas Instruments Wiki_files/120px-BLE_Device_Monitor_uploading_OAD_image.png" width="120" height="81"></a></div></div>
+			<div class="gallerytext">
+<p>Uploading image
+</p>
+			</div>
+		</div></td>
+	</tr>
+</tbody></table>
+<p><br>
+<br>
+<a href="http://processors.wiki.ti.com/index.php/Bluetooth_SensorTag" class="external text" rel="nofollow" target="_blank">Back to <i>Bluetooth</i> SensorTag main page</a>
+<br>
+</p>
+<!-- 
+NewPP limit report
+Preprocessor node count: 262/1000000
+Post-expand include size: 0/2097152 bytes
+Template argument size: 0/2097152 bytes
+Expensive parser function count: 0/100
+-->
+<div class="hf-footer"></div><div class="hf-nsfooter"><table style="text-align:center; background:white; width:100%; text-align:left; height: 65px border-top: 1px solid; border-bottom: 1px solid; border-left: 1px solid; border-right: 1px solid; border-width: 1px; border-style: solid;">
+<tbody><tr>
+<td width="305px"><a href="http://processors.wiki.ti.com/index.php/File:E2e.jpg" class="image"><img alt="E2e.jpg" src="./SensorTag User Guide - Texas Instruments Wiki_files/E2e.jpg" width="305" height="63"></a>
+</td><td><i>For technical support please post your questions at <a href="http://e2e.ti.com/" class="external free" rel="nofollow" target="_blank">http://e2e.ti.com</a>. Please post only comments about the article <b>SensorTag User Guide</b> here.</i>
+</td></tr></tbody></table>
+<table style="border-style:solid; border-width:1px; text-align:center; width:100%;">
+
+<tbody><tr style="font-size:150%;">
+<td rowspan="2"> <a href="http://processors.wiki.ti.com/index.php/File:Hyperlink_blue.png" class="image"><img alt="Hyperlink blue.png" src="./SensorTag User Guide - Texas Instruments Wiki_files/96px-Hyperlink_blue.png" width="96" height="96"></a>
+</td><td><b>Links</b>
+</td></tr>
+<tr>
+<td>
+<table style="text-align: left;">
+<tbody><tr>
+<td style="padding-right: 10px; vertical-align: top;">
+<p><a href="http://www.ti.com/lsds/ti/analog/amplifier_and_linear.page" class="external text" rel="nofollow" target="_blank">Amplifiers &amp; Linear</a><br>
+<a href="http://www.ti.com/lsds/ti/analog/audio/audio_overview.page" class="external text" rel="nofollow" target="_blank">Audio</a><br>
+<a href="http://www.ti.com/lsds/ti/analog/rfif.page" class="external text" rel="nofollow" target="_blank">Broadband RF/IF &amp; Digital Radio</a><br>
+<a href="http://www.ti.com/lsds/ti/analog/clocksandtimers/clocks_and_timers.page" class="external text" rel="nofollow" target="_blank">Clocks &amp; Timers</a><br>
+<a href="http://www.ti.com/lsds/ti/analog/dataconverters/data_converter.page" class="external text" rel="nofollow" target="_blank">Data Converters</a>
+</p>
+</td><td style="padding-right: 10px; vertical-align: top;">
+<p><a href="http://www.ti.com/lsds/ti/analog/mems/mems.page" class="external text" rel="nofollow" target="_blank">DLP &amp; MEMS</a><br>
+<a href="http://www.ti.com/lsds/ti/analog/high_reliability.page" class="external text" rel="nofollow" target="_blank">High-Reliability</a><br>
+<a href="http://www.ti.com/lsds/ti/analog/interface/interface.page" class="external text" rel="nofollow" target="_blank">Interface</a><br>
+<a href="http://www.ti.com/lsds/ti/logic/home_overview.page" class="external text" rel="nofollow" target="_blank">Logic</a><br>
+<a href="http://www.ti.com/lsds/ti/analog/powermanagement/power_portal.page" class="external text" rel="nofollow" target="_blank">Power Management</a>
+</p>
+</td><td style="padding-right: 10px; vertical-align: top;">
+<p><a href="http://www.ti.com/lsds/ti/dsp/embedded_processor.page" class="external text" rel="nofollow" target="_blank">Processors</a>
+</p>
+<ul><li> <a href="http://www.ti.com/lsds/ti/dsp/arm.page" class="external text" rel="nofollow" target="_blank">ARM Processors</a>
+</li><li> <a href="http://www.ti.com/lsds/ti/dsp/home.page" class="external text" rel="nofollow" target="_blank">Digital Signal Processors (DSP)</a>
+</li><li> <a href="http://www.ti.com/lsds/ti/microcontroller/home.page" class="external text" rel="nofollow" target="_blank">Microcontrollers (MCU)</a>
+</li><li> <a href="http://www.ti.com/lsds/ti/omap-applications-processors/the-omap-experience.page" class="external text" rel="nofollow" target="_blank">OMAP Applications Processors</a>
+</li></ul>
+</td><td style="padding-right: 10px; vertical-align: top;">
+<p><a href="http://www.ti.com/lsds/ti/analog/switches_and_multiplexers.page" class="external text" rel="nofollow" target="_blank">Switches &amp; Multiplexers</a><br>
+<a href="http://www.ti.com/lsds/ti/analog/temperature_sensor.page" class="external text" rel="nofollow" target="_blank">Temperature Sensors &amp; Control ICs</a><br>
+<a href="http://focus.ti.com/wireless/docs/wirelessoverview.tsp?familyId=2003&sectionId=646&tabId=2735" class="external text" rel="nofollow" target="_blank">Wireless Connectivity</a>
+</p>
+</td></tr></tbody></table>
+</td></tr></tbody></table>
+<p><!-- HitBox Sub accounts Code START -->
+<script language="JavaScript" src="./SensorTag User Guide - Texas Instruments Wiki_files/metrics-min.js" type="text/javascript"></script>
+<!-- HitBox Sub accounts Code END -->
+</p></div><div class="printfooter">
+Retrieved from "<a href="./SensorTag User Guide - Texas Instruments Wiki_files/SensorTag User Guide - Texas Instruments Wiki.html">http://processors.wiki.ti.com/index.php/SensorTag_User_Guide</a>"</div>
+				<!-- /bodytext -->
+								<!-- catlinks -->
+				<div id="catlinks" class="catlinks catlinks-allhidden"></div>				<!-- /catlinks -->
+			<!-- AC : 030309 : adding ArticleComments support -->
+      <!-- AC : 031809 : Adding patch from http://wiki.sanb.design.ti.com/twiki/bin/view/SDSApps/AddingArticleCommentsToEachPage -->
+      <a href="http://processors.wiki.ti.com/index.php?title=Special:UserLogin&returnto=SensorTag_User_Guide">Leave a Comment</a>			<h1>Comments</h1>
+<p>Comments on <a href="./SensorTag User Guide - Texas Instruments Wiki_files/SensorTag User Guide - Texas Instruments Wiki.html" title="SensorTag User Guide">SensorTag User Guide</a>
+</p>
+<hr> 
+<table id="toc" class="toc"><tbody><tr><td><div id="toctitle"><h2>Contents</h2></div>
+<ul>
+<li class="toclevel-1 tocsection-1"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Slon_said_..."><span class="tocnumber">1</span> <span class="toctext">Slon said ...</span></a></li>
+<li class="toclevel-1 tocsection-2"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Jboe_said_..."><span class="tocnumber">2</span> <span class="toctext">Jboe said ...</span></a></li>
+<li class="toclevel-1 tocsection-3"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Kickingvegas_said_..."><span class="tocnumber">3</span> <span class="toctext">Kickingvegas said ...</span></a></li>
+<li class="toclevel-1 tocsection-4"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Capiman_said_..."><span class="tocnumber">4</span> <span class="toctext">Capiman said ...</span></a></li>
+<li class="toclevel-1 tocsection-5"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#IronSheep_said_..."><span class="tocnumber">5</span> <span class="toctext">IronSheep said ...</span></a></li>
+<li class="toclevel-1 tocsection-6"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#IronSheep_said_..._2"><span class="tocnumber">6</span> <span class="toctext">IronSheep said ...</span></a></li>
+<li class="toclevel-1 tocsection-7"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Lnanek_said_..."><span class="tocnumber">7</span> <span class="toctext">Lnanek said ...</span></a></li>
+<li class="toclevel-1 tocsection-8"><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#Inder_said_..."><span class="tocnumber">8</span> <span class="toctext">Inder said ...</span></a></li>
+</ul>
+</td></tr></tbody></table><script>if (window.showTocToggle) { var tocShowText = "show"; var tocHideText = "hide"; showTocToggle(); } </script>
+<h2> <span class="mw-headline" id="Slon_said_..."> Slon said ... </span></h2>
+<div class="commentBlock">
+<p>IT der acc Sensor an kxt9 insted of an ktxj9
+</p><p>--<a href="http://processors.wiki.ti.com/index.php?title=User:Slon&action=edit&redlink=1" class="new" title="User:Slon (page does not exist)">Slon</a> 15:53, 6 November 2012 (CST)
+</p>
+</div>
+<h2> <span class="mw-headline" id="Jboe_said_..."> Jboe said ... </span></h2>
+<div class="commentBlock">
+<p>Thanks for pointing out, it is fixed now
+</p><p>--<a href="http://processors.wiki.ti.com/index.php?title=User:Jboe&action=edit&redlink=1" class="new" title="User:Jboe (page does not exist)">Jboe</a> 08:13, 14 November 2012 (CST)
+</p>
+</div>
+<h2> <span class="mw-headline" id="Kickingvegas_said_..."> Kickingvegas said ... </span></h2>
+<div class="commentBlock">
+<p>Somewhat confused in reconciling this statement with what I see in the example iOS source code, where the offset is put in the high byte.
+</p><p><i>The TI Base 128-bit UUID is: F0000000-0451-4000-B000-000000000000. Alle sensor services use 128-bit UUIDs, but for practical reasons only the 16-bit part is listed below. This is embedded in the lower 16 bits of the 128-bit UUID. Example: 0xAA01 maps as F0000000-0451-4000-B000-00000000AA01."</i>
+</p><p><br>
+Looking at deviceSelector.m, the address I see for the equivalent example above is set to 
+</p>
+<pre>   [d setValue:@"f000aa01-0451-4000 b000-000000000000" forKey:@"IR temperature data UUID"];
+</pre>
+<p><br>
+where the "aa01" is set higher in the bit field.
+</p><p><br>
+Please clarify.
+</p><p><br>
+</p><p>--<a href="http://processors.wiki.ti.com/index.php?title=User:Kickingvegas&action=edit&redlink=1" class="new" title="User:Kickingvegas (page does not exist)">Kickingvegas</a> 22:32, 11 December 2012 (CST)
+</p>
+</div>
+<h2> <span class="mw-headline" id="Capiman_said_..."> Capiman said ... </span></h2>
+<div class="commentBlock">
+<p>I think i have found 3 bugs in the description:
+(BTW: Very helpful, many thanks!)
+1) Gyroscope &lt;Configuration&gt; is not at 0x44, but at 0x5B
+2) Bit number in Test Service for Gyroscope test is not 6 but 5.
+3) Search for "&lt;3.4&nbsp;;Hz" (it is in Sensor overview). Think it shall be "&lt;3.4 MHz"
+</p><p>--<a href="http://processors.wiki.ti.com/index.php?title=User:Capiman&action=edit&redlink=1" class="new" title="User:Capiman (page does not exist)">Capiman</a> 11:48, 1 February 2013 (CST)
+</p>
+</div>
+<h2> <span class="mw-headline" id="IronSheep_said_..."> IronSheep said ... </span></h2>
+<div class="commentBlock">
+<p>It appears that there is a lower limit for both "Magnetometer Period" [10-255] and "Accelerometer Period", also [10-255].  Lower values 0-9, for either, return an error if attempt to write value to characteristic.
+</p><p>--<a href="http://processors.wiki.ti.com/index.php?title=User:IronSheep&action=edit&redlink=1" class="new" title="User:IronSheep (page does not exist)">IronSheep</a> 04:56, 18 April 2013 (CDT)
+</p>
+</div>
+<h2> <span class="mw-headline" id="IronSheep_said_..._2"> IronSheep said ... </span></h2>
+<div class="commentBlock">
+<p>Experimentation with the Magnetometer Period settings appear to show that the Description for this Characteristic F000AA33*  should read the same as the Accelerometer Period Characteristic F000AA13*.  That is it appears that both descriptions should be "Period = [Input*10]ms where Input is [10-255]".
+</p><p>--<a href="http://processors.wiki.ti.com/index.php?title=User:IronSheep&action=edit&redlink=1" class="new" title="User:IronSheep (page does not exist)">IronSheep</a> 05:04, 18 April 2013 (CDT)
+</p>
+</div>
+<h2> <span class="mw-headline" id="Lnanek_said_..."> Lnanek said ... </span></h2>
+<div class="commentBlock">
+<p>Running into the same issue as Kickingvegas, but on an Android device. Seeing "f000aa00-0451-4000-b000-000000000000" returned by the SensorTag device instead of the "F0000000-0451-4000-B000-00000000AA00" suggested by the documentation. Same for the other service UUIDs.
+</p><p>--<a href="http://processors.wiki.ti.com/index.php?title=User:Lnanek&action=edit&redlink=1" class="new" title="User:Lnanek (page does not exist)">Lnanek</a> 18:39, 19 April 2013 (CDT)
+</p>
+</div>
+<h2> <span class="mw-headline" id="Inder_said_..."> Inder said ... </span></h2>
+<div class="commentBlock">
+<p>IR Temperature bad handle for enable sensor: 0x2A right value is 0x29
+</p><p><br>
+</p><p>--<a href="http://processors.wiki.ti.com/index.php?title=User:Inder&action=edit&redlink=1" class="new" title="User:Inder (page does not exist)">Inder</a> 05:53, 12 June 2013 (CDT)
+</p>
+</div>
+
+												<div class="visualClear"></div>
+			</div>
+			<!-- /bodyContent -->
+		</div>
+		<!-- /content -->
+		<!-- header -->
+		<div id="mw-head" class="noprint">
+			
+<!-- 0 -->
+<div id="p-personal" class="">
+	<h5>Personal tools</h5>
+	<ul>
+					<li id="pt-login"><a href="http://processors.wiki.ti.com/index.php?title=Special:UserLogin&returnto=SensorTag_User_Guide" title="You are encouraged to log in; however, it is not mandatory [ctrl-alt-o]" accesskey="o">Log in / create account</a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+			<div id="left-navigation">
+				
+<!-- 0 -->
+<div id="p-namespaces" class="vectorTabs">
+	<h5>Namespaces</h5>
+	<ul>
+					<li id="ca-nstab-main" class="selected"><a href="./SensorTag User Guide - Texas Instruments Wiki_files/SensorTag User Guide - Texas Instruments Wiki.html" title="View the content page [ctrl-alt-c]" accesskey="c"><span>Page</span></a></li>
+					<li id="ca-talk"><a href="http://processors.wiki.ti.com/index.php/Talk:SensorTag_User_Guide" title="Discussion about the content page [ctrl-alt-t]" accesskey="t"><span>Discussion</span></a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-variants" class="vectorMenu emptyPortlet">
+	<h5><span>Variants</span><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+			</div>
+			<div id="right-navigation">
+				
+<!-- 0 -->
+<div id="p-views" class="vectorTabs">
+	<h5>Views</h5>
+	<ul>
+					<li id="ca-view" class="selected"><a href="./SensorTag User Guide - Texas Instruments Wiki_files/SensorTag User Guide - Texas Instruments Wiki.html"><span>Read</span></a></li>
+					<li id="ca-viewsource"><a href="http://processors.wiki.ti.com/index.php?title=SensorTag_User_Guide&action=edit" title="This page is protected.
+You can view its source [ctrl-alt-e]" accesskey="e"><span>View source</span></a></li>
+					<li id="ca-history" class="collapsible "><a href="http://processors.wiki.ti.com/index.php?title=SensorTag_User_Guide&action=history" title="Past revisions of this page [ctrl-alt-h]" accesskey="h"><span>View history</span></a></li>
+			</ul>
+</div>
+
+<!-- /0 -->
+
+<!-- 1 -->
+<div id="p-cactions" class="vectorMenu emptyPortlet">
+	<h5><span>Actions</span><a href="http://processors.wiki.ti.com/index.php/SensorTag_User_Guide#"></a></h5>
+	<div class="menu">
+		<ul>
+					</ul>
+	</div>
+</div>
+
+<!-- /1 -->
+
+<!-- 2 -->
+<div id="p-search">
+	<h5><label for="searchInput">Search</label></h5>
+	<form action="http://processors.wiki.ti.com/index.php" id="searchform">
+		<input type="hidden" name="title" value="Special:Search">
+				<input id="searchInput" name="search" type="text" title="Search Texas Instruments Wiki [ctrl-alt-f]" accesskey="f" value="">
+		<input type="submit" name="go" class="searchButton" id="searchGoButton" value="Go" title="Go to a page with this exact name if exists">
+		<input type="submit" name="fulltext" class="searchButton" id="mw-searchButton" value="Search" title="Search the pages for this text">
+			</form>
+</div>
+
+<!-- /2 -->
+			</div>
+		</div>
+		<!-- /header -->
+		<!-- panel -->
+			<div id="mw-panel" class="noprint">
+				<!-- logo -->
+					<div id="p-logo"><a style="background-image: url(/images/tiexpres.png);" href="http://processors.wiki.ti.com/index.php/Main_Page" title="Visit the main page"></a></div>
+				<!-- /logo -->
+				
+<!-- navigation -->
+<div class="portal" id="p-navigation">
+	<h5>Navigation</h5>
+	<div class="body">
+				<ul>
+					<li id="n-mainpage"><a href="http://processors.wiki.ti.com/index.php/Main_Page" title="Visit the main page [ctrl-alt-z]" accesskey="z">Main Page</a></li>
+					<li id="n-All-pages"><a href="http://processors.wiki.ti.com/index.php/Special:AllPages">All pages</a></li>
+					<li id="n-All-categories"><a href="http://processors.wiki.ti.com/index.php/Special:Categories">All categories</a></li>
+					<li id="n-Popular-pages"><a href="http://processors.wiki.ti.com/index.php/Special:PopularPages">Popular pages</a></li>
+					<li id="n-Popular-authors"><a href="http://processors.wiki.ti.com/index.php/Special:MostPopularAuthors">Popular authors</a></li>
+					<li id="n-Popular-categories"><a href="http://processors.wiki.ti.com/index.php/Special:CategoryHits">Popular categories</a></li>
+					<li id="n-Category-stats"><a href="http://processors.wiki.ti.com/index.php/Special:CategoryStats">Category stats</a></li>
+					<li id="n-recentchanges"><a href="http://processors.wiki.ti.com/index.php/Special:RecentChanges" title="The list of recent changes in the wiki [ctrl-alt-r]" accesskey="r">Recent changes</a></li>
+					<li id="n-randompage"><a href="http://processors.wiki.ti.com/index.php/Special:Random" title="Load a random page [ctrl-alt-x]" accesskey="x">Random page</a></li>
+					<li id="n-help"><a href="http://processors.wiki.ti.com/index.php/Help:Contents" title="The place to find out">Help</a></li>
+					<li id="n-Google-Search"><a href="http://processors.wiki.ti.com/index.php/GoogleSearch">Google Search</a></li>
+				</ul>
+			</div>
+</div>
+
+<!-- /navigation -->
+
+<!-- coll-print_export -->
+<div class="portal" id="p-coll-print_export">
+	<h5>Print/export</h5>
+	<div class="body">
+				<ul id="collectionPortletList"><li id="coll-create_a_book"><a href="http://processors.wiki.ti.com/index.php?title=Special:Book&bookcmd=book_creator&referer=SensorTag+User+Guide" title="Create a book or page collection" rel="nofollow">Create a book</a></li><li id="coll-download-as-rl"><a href="http://processors.wiki.ti.com/index.php?title=Special:Book&bookcmd=render_article&arttitle=SensorTag+User+Guide&oldid=151637&writer=rl" title="Download a PDF version of this wiki page" rel="nofollow">Download as PDF</a></li><li id="t-print"><a href="http://processors.wiki.ti.com/index.php?title=SensorTag_User_Guide&printable=yes" title="Printable version of this page [ctrl-alt-p]" accesskey="p">Printable version</a></li></ul>			</div>
+</div>
+
+<!-- /coll-print_export -->
+
+<!-- SEARCH -->
+
+<!-- /SEARCH -->
+
+<!-- TOOLBOX -->
+<div class="portal" id="p-tb">
+	<h5>Toolbox</h5>
+	<div class="body">
+		<ul>
+					<li id="t-whatlinkshere"><a href="http://processors.wiki.ti.com/index.php/Special:WhatLinksHere/SensorTag_User_Guide" title="List of all wiki pages that link here [ctrl-alt-j]" accesskey="j">What links here</a></li>
+						<li id="t-recentchangeslinked"><a href="http://processors.wiki.ti.com/index.php/Special:RecentChangesLinked/SensorTag_User_Guide" title="Recent changes in pages linked from this page [ctrl-alt-k]" accesskey="k">Related changes</a></li>
+																																										<li id="t-specialpages"><a href="http://processors.wiki.ti.com/index.php/Special:SpecialPages" title="List of all special pages [ctrl-alt-q]" accesskey="q">Special pages</a></li>
+											<li id="t-permalink"><a href="http://processors.wiki.ti.com/index.php?title=SensorTag_User_Guide&oldid=151637" title="Permanent link to this revision of the page">Permanent link</a></li>
+				<li id="t-smwbrowselink"><a href="http://processors.wiki.ti.com/index.php/Special:Browse/SensorTag_User_Guide" title="Special:Browse/SensorTag User Guide">Browse properties</a></li>		</ul>
+	</div>
+</div>
+
+<!-- /TOOLBOX -->
+
+<!-- LANGUAGES -->
+
+<!-- /LANGUAGES -->
+			</div>
+		<!-- /panel -->
+		<!-- footer -->
+		<div id="footer">
+											<ul id="footer-info">
+																	<li id="footer-info-lastmod"> This page was last modified on 23 May 2013, at 11:02.</li>
+																							<li id="footer-info-viewcount">This page has been accessed 14,259 times.</li>
+																							<li id="footer-info-copyright">Content is available under <a href="http://processors.wiki.ti.com/index.php/Texas_Instruments_Wiki:Copyrights" title="Texas Instruments Wiki:Copyrights">Creative Commons Attribution-Share Alike 3.0 license</a>.</li>
+															</ul>
+															<ul id="footer-places">
+																	<li id="footer-places-privacy"><a href="http://processors.wiki.ti.com/index.php/Texas_Instruments_Wiki:Privacy_policy" title="Texas Instruments Wiki:Privacy policy">Privacy policy</a></li>
+																							<li id="footer-places-about"><a href="http://processors.wiki.ti.com/index.php/Texas_Instruments_Wiki:About" title="Texas Instruments Wiki:About">About Texas Instruments Wiki</a></li>
+																							<li id="footer-places-disclaimer"><a href="http://processors.wiki.ti.com/index.php/Texas_Instruments_Wiki:General_disclaimer" title="Texas Instruments Wiki:General disclaimer">Disclaimers</a></li>
+															</ul>
+										<ul id="footer-icons" class="noprint">
+								<li id="footer-icon-poweredby"><a href="http://www.mediawiki.org/"><img src="./SensorTag User Guide - Texas Instruments Wiki_files/poweredby_mediawiki_88x31.png" height="31" width="88" alt="Powered by MediaWiki"></a></li>
+												<li id="footer-icon-copyright"><a href="http://creativecommons.org/licenses/by-sa/3.0/us/"><img src="./SensorTag User Guide - Texas Instruments Wiki_files/88x31.png" alt="Creative Commons Attribution-Share Alike 3.0 license" width="88" height="31"></a></li>
+							</ul>
+			<div style="clear:both"></div>
+		</div>
+		<!-- /footer -->
+		<!-- fixalpha -->
+		<script type="text/javascript"> if ( window.isMSIE55 ) fixalpha(); </script>
+		<!-- /fixalpha -->
+		
+<script>if (window.runOnloadHook) runOnloadHook();</script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-3008403-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>		<!-- Served in 1.689 secs. -->			
+
+</body></html>
