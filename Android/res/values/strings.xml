@@ -7,6 +7,12 @@
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
 
+    <!-- Preferences -->
+    <string name="pref_activity_title">Preferences</string>
+    <string name="pref_nickname_title">Name to show </string>
+    <string name="pref_nickname_default">MrNobody</string>
+    <string name="pref_nickname_description">you will be known as &quot;%1$s&quot;</string>
+
     <!-- Welcome Screen -->
     <string name="welcomeScr1Heading1">Welcome To</string>
     <string name="welcomeScr1Heading2">Project Nocturne</string>
