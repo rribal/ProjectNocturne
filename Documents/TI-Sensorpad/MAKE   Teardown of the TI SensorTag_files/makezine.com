@@ -1,1 +1,0 @@
-PARSELY.pInit({"apikey":"makezine.com","customizations":null,"bundle":"/code/slim_v02.js","settings":{"debug":false,"widget":false,"tracker":true},"uuid":"05DD665F-EF3B-460B-AF3C-471B85E75726"});
