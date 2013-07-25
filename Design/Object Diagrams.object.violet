@@ -5,7 +5,8 @@
    <object class="com.horstmann.violet.ObjectNode">
     <void property="name">
      <void property="text">
-      <string>SensorService</string>
+      <string>SensorPolling
+Service</string>
      </void>
     </void>
    </object>
@@ -73,19 +74,19 @@ Handler</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double2"/>
-      <double>402.0</double>
+      <double>783.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double2"/>
-      <double>155.0</double>
+      <double>343.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>402.0</double>
-     <double>155.0</double>
+     <double>783.0</double>
+     <double>343.0</double>
     </void>
    </object>
   </void>
@@ -134,19 +135,79 @@ Service</string>
      <string>x</string>
      <void method="set">
       <object idref="Point2D$Double4"/>
-      <double>688.0</double>
+      <double>793.0</double>
      </void>
     </void>
     <void class="java.awt.geom.Point2D$Double" method="getField">
      <string>y</string>
      <void method="set">
       <object idref="Point2D$Double4"/>
-      <double>227.0</double>
+      <double>254.0</double>
      </void>
     </void>
     <void method="setLocation">
-     <double>688.0</double>
-     <double>227.0</double>
+     <double>793.0</double>
+     <double>254.0</double>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.ObjectNode">
+    <void property="name">
+     <void property="text">
+      <string>StoreToDb
+Service</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double5">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double5"/>
+      <double>231.0</double>
+     </void>
+    </void>
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>y</string>
+     <void method="set">
+      <object idref="Point2D$Double5"/>
+      <double>264.0</double>
+     </void>
+    </void>
+    <void method="setLocation">
+     <double>231.0</double>
+     <double>264.0</double>
+    </void>
+   </object>
+  </void>
+  <void method="addNode">
+   <object class="com.horstmann.violet.ObjectNode">
+    <void property="name">
+     <void property="text">
+      <string>SendToServer
+Service</string>
+     </void>
+    </void>
+   </object>
+   <object class="java.awt.geom.Point2D$Double" id="Point2D$Double6">
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>x</string>
+     <void method="set">
+      <object idref="Point2D$Double6"/>
+      <double>540.0</double>
+     </void>
+    </void>
+    <void class="java.awt.geom.Point2D$Double" method="getField">
+     <string>y</string>
+     <void method="set">
+      <object idref="Point2D$Double6"/>
+      <double>277.0</double>
+     </void>
+    </void>
+    <void method="setLocation">
+     <double>540.0</double>
+     <double>277.0</double>
     </void>
    </object>
   </void>

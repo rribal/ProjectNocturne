@@ -12,7 +12,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 public class MainActivity extends FragmentActivity implements ActionBar.OnNavigationListener {
-
 	/**
 	 * A dummy fragment representing a section of the app, but that simply
 	 * displays dummy text.
@@ -35,6 +34,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.OnNaviga
 			return rootView;
 		}
 	}
+
+	public static final String LOG_TAG = MainActivity.class.getSimpleName();
 
 	/**
 	 * The serialization (saved instance state) Bundle key representing the

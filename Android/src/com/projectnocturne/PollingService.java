@@ -6,8 +6,11 @@ import java.util.Timer;
 import android.accounts.Account;
 import android.accounts.AccountManager;
 import android.app.Service;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.IBinder;
 import android.util.Log;
 
@@ -17,17 +20,30 @@ import android.util.Log;
  * 
  * @author andy aspell-clark
  */
-public final class NocturneService extends Service {
-
-	private Context context;
+public final class PollingService extends Service {
 
 	/**
 	 * Tag used on log messages.
 	 */
-	private static final String LOG_TAG = NocturneService.class.getSimpleName();
+	private static final String LOG_TAG = PollingService.class.getSimpleName();
+
+	private static final String REQUEST_ENABLE_BT = null;
 
 	private final Timer timer = new Timer();
 	private String emailToUse = "unknown";
+	private Context context;
+	private BluetoothAdapter mBluetoothAdapter;
+
+	private boolean bleEnabled() {
+		// Use this check to determine whether BLE is supported on the device.
+		// Then you can selectively disable BLE-related features.
+		if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+			// Toast.makeText(this, R.string.ble_not_supported,
+			// Toast.LENGTH_SHORT).show();
+			return false;
+		}
+		return true;
+	}
 
 	private ArrayList<String> getGoogleAccounts() {
 		final AccountManager am = AccountManager.get(getApplicationContext());
@@ -51,6 +67,11 @@ public final class NocturneService extends Service {
 	}
 
 	@Override
+	public void onCreate() {
+		super.onCreate();
+	}
+
+	@Override
 	public int onStartCommand(final Intent intent, final int flags, final int startId) {
 
 		final ArrayList<String> accountList = getGoogleAccounts();
@@ -59,6 +80,22 @@ public final class NocturneService extends Service {
 		}
 
 		return super.onStartCommand(intent, flags, startId);
+	}
+
+	private void setupBle() {
+		if (bleEnabled()) {
+			// Initializes Bluetooth adapter.
+			final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+			mBluetoothAdapter = bluetoothManager.getAdapter();
+
+			// Ensures Bluetooth is available on the device and it is enabled.
+			// If not, displays a dialog requesting user permission to enable
+			// Bluetooth.
+			if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+				final Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+				getApplication().startActivity(enableBtIntent);
+			}
+		}
 	}
 
 }

@@ -11,7 +11,7 @@ public final class BootReceiver extends BroadcastReceiver {
 	@Override
 	public void onReceive(final Context context, final Intent intent) {
 		Log.d(BootReceiver.LOG_TAG, "BootReceiver; starting project nocturne service.");
-		final Intent longSvc = new Intent(context, NocturneService.class);
+		final Intent longSvc = new Intent(context, PollingService.class);
 		context.startService(longSvc);
 	}
 
