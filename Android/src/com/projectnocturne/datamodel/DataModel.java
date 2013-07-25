@@ -9,7 +9,7 @@ import com.projectnocturne.MainActivity;
 
 public final class DataModel {
 
-	private final UsersProvider usersPlanPrvdr = null;
+	private UsersProvider usersPlanPrvdr = null;
 	private final Context context;
 
 	public DataModel(final Context ctx) {

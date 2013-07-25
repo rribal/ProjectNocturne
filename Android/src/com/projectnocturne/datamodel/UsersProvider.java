@@ -35,23 +35,23 @@ public final class UsersProvider extends Db4oHelper {
 		final CommonConfiguration configCommon = configEmbedded.common();
 		configCommon.activationDepth(8); // Global activation depth.
 
-		configEmbedded.common().objectClass(Users.class).objectField("name").indexed(true);
+		configEmbedded.common().objectClass(Users.class).objectField("_id").indexed(true);
 		configEmbedded.common().objectClass(Users.class).cascadeOnUpdate(true);
 		configEmbedded.common().objectClass(Users.class).cascadeOnActivate(true);
 		return configEmbedded;
 	}
 
-	public void delete(final Users trnPln) {
-		db().delete(trnPln);
+	public void delete(final Users usr) {
+		db().delete(usr);
 		db().commit();
 	}
 
 	public List<Users> findAll() {
-		return db().query(TrainingPlan.class);
+		return db().query(Users.class);
 	}
 
-	public void store(final Users trnPln) {
-		db().store(trnPln);
+	public void store(final Users usr) {
+		db().store(usr);
 		db().commit();
 	}
 }
