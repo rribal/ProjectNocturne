@@ -1,16 +1,27 @@
 package co.uk.droidinactu.sensortagtester;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGattCharacteristic;
+import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
+import android.content.BroadcastReceiver;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.IBinder;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
@@ -19,9 +30,9 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import co.uk.droidinactu.sensortagtester.constants.SampleGattAttributes;
 
 public class SensorTagDashboard extends Activity implements ActionBar.OnNavigationListener {
-
 	/**
 	 * A dummy fragment representing a section of the app, but that simply
 	 * displays dummy text.
@@ -108,6 +119,8 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 		}
 	}
 
+	private static final String LOG_TAG = SensorTagDashboard.class.getSimpleName();
+
 	private final SensorTagReadings currReadings = new SensorTagReadings();
 
 	private ImageView sensortagConnectedImg;
@@ -121,8 +134,12 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 	private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
 
 	private Handler mHandler;
-
+	private String mDeviceName;
+	private String mDeviceAddress;
+	private BluetoothLeService mBluetoothLeService;
 	private boolean mScanning;
+	private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics = new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
+	private boolean mConnected = false;
 
 	private static final int REQUEST_ENABLE_BT = 1;
 
@@ -137,24 +154,77 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					// we've found a device so try to connect
+					final Intent gattServiceIntent = new Intent(SensorTagDashboard.this, BluetoothLeService.class);
+					bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
 				}
 			});
 		}
 	};
 
+	// Handles various events fired by the Service.
+	// ACTION_GATT_CONNECTED: connected to a GATT server.
+	// ACTION_GATT_DISCONNECTED: disconnected from a GATT server.
+	// ACTION_GATT_SERVICES_DISCOVERED: discovered GATT services.
+	// ACTION_DATA_AVAILABLE: received data from the device. This can be a
+	// result of read
+	// or notification operations.
+	private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
+		@Override
+		public void onReceive(final Context context, final Intent intent) {
+			final String action = intent.getAction();
+			if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
+				mConnected = true;
+				updateConnectionState(R.string.sensortag_connected);
+				invalidateOptionsMenu();
+			} else if (BluetoothLeService.ACTION_GATT_DISCONNECTED.equals(action)) {
+				mConnected = false;
+				updateConnectionState(R.string.sensortag_disconnected);
+				invalidateOptionsMenu();
+			} else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
+				// Show all the supported services and characteristics on the
+				// user interface.
+				parseGattServices(mBluetoothLeService.getSupportedGattServices());
+			} else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
+				parseData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
+			}
+		}
+
+	};
+	// Code to manage Service lifecycle.
+	private final ServiceConnection mServiceConnection = new ServiceConnection() {
+
+		@Override
+		public void onServiceConnected(final ComponentName componentName, final IBinder service) {
+			mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
+			if (!mBluetoothLeService.initialize()) {
+				Log.e(LOG_TAG, "Unable to initialize Bluetooth");
+				finish();
+			}
+			// Automatically connects to the device upon successful start-up
+			// initialization.
+			mBluetoothLeService.connect(mDeviceAddress);
+		}
+
+		@Override
+		public void onServiceDisconnected(final ComponentName componentName) {
+			mBluetoothLeService = null;
+		}
+	};
+
+	private final String LIST_NAME = "NAME";
+
+	private final String LIST_UUID = "UUID";
+
 	private void checkBluetoothAvailable() {
 		// Use this check to determine whether BLE is supported on the device.
-		// Then you can
-		// selectively disable BLE-related features.
+		// Then you can selectively disable BLE-related features.
 		if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
 			Toast.makeText(this, R.string.ble_not_supported, Toast.LENGTH_SHORT).show();
 			finish();
 		}
 
 		// Initializes a Bluetooth adapter. For API level 18 and above, get a
-		// reference to
-		// BluetoothAdapter through BluetoothManager.
+		// reference to BluetoothAdapter through BluetoothManager.
 		final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
 		mBluetoothAdapter = bluetoothManager.getAdapter();
 
@@ -256,6 +326,46 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 		outState.putInt(STATE_SELECTED_NAVIGATION_ITEM, getActionBar().getSelectedNavigationIndex());
 	}
 
+	private void parseData(final String data) {
+		// TODO Auto-generated method stub
+
+	}
+
+	private void parseGattServices(final List<BluetoothGattService> gattServices) {
+		if (gattServices == null) { return; }
+		String uuid = null;
+		final String unknownServiceString = "unknown_service";
+		final String unknownCharaString = "unknown_characteristic";
+		final ArrayList<HashMap<String, String>> gattServiceData = new ArrayList<HashMap<String, String>>();
+		final ArrayList<ArrayList<HashMap<String, String>>> gattCharacteristicData = new ArrayList<ArrayList<HashMap<String, String>>>();
+		mGattCharacteristics = new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
+
+		// Loops through available GATT Services.
+		for (final BluetoothGattService gattService : gattServices) {
+			final HashMap<String, String> currentServiceData = new HashMap<String, String>();
+			uuid = gattService.getUuid().toString();
+			currentServiceData.put(LIST_NAME, SampleGattAttributes.lookup(uuid, unknownServiceString));
+			currentServiceData.put(LIST_UUID, uuid);
+			gattServiceData.add(currentServiceData);
+
+			final ArrayList<HashMap<String, String>> gattCharacteristicGroupData = new ArrayList<HashMap<String, String>>();
+			final List<BluetoothGattCharacteristic> gattCharacteristics = gattService.getCharacteristics();
+			final ArrayList<BluetoothGattCharacteristic> charas = new ArrayList<BluetoothGattCharacteristic>();
+
+			// Loops through available Characteristics.
+			for (final BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
+				charas.add(gattCharacteristic);
+				final HashMap<String, String> currentCharaData = new HashMap<String, String>();
+				uuid = gattCharacteristic.getUuid().toString();
+				currentCharaData.put(LIST_NAME, SampleGattAttributes.lookup(uuid, unknownCharaString));
+				currentCharaData.put(LIST_UUID, uuid);
+				gattCharacteristicGroupData.add(currentCharaData);
+			}
+			mGattCharacteristics.add(charas);
+			gattCharacteristicData.add(gattCharacteristicGroupData);
+		}
+	}
+
 	private void scanLeDevice(final boolean enable) {
 		if (enable) {
 			// Stops scanning after a pre-defined scan period.
@@ -274,5 +384,10 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 			mScanning = false;
 			mBluetoothAdapter.stopLeScan(mLeScanCallback);
 		}
+	}
+
+	private void updateConnectionState(final int sensortagConnected) {
+		// TODO Auto-generated method stub
+
 	}
 }
