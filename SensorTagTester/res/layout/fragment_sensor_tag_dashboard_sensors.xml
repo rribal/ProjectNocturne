@@ -1,101 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Title"
-            android:id="@+id/sensvals_txtTitle"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"/>
+        android:id="@+id/sensvals_txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:text="Title"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Label1"
-            android:id="@+id/sensvals_txtLbl1"
-            android:layout_gravity="left|center_vertical"
-            android:layout_below="@+id/sensvals_txtTitle"
-            android:layout_alignParentLeft="true"/>
+        android:id="@+id/sensvals_txtLbl1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/sensvals_txtTitle"
+        android:layout_gravity="left|center_vertical"
+        android:text="Label1" />
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Value1"
-            android:id="@+id/sensvals_txtValue1"
-            android:layout_alignTop="@+id/sensvals_txtLbl1"
-            android:layout_alignParentRight="true"/>
+        android:id="@+id/sensvals_txtValue1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/sensvals_txtLbl1"
+        android:text="Value1" />
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Label2"
-            android:id="@+id/sensvals_txtLbl2"
-            android:layout_gravity="left|center_vertical"
-            android:layout_below="@+id/sensvals_txtLbl1"
-            android:layout_alignParentLeft="true"/>
+        android:id="@+id/sensvals_txtLbl2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/sensvals_txtLbl1"
+        android:layout_gravity="left|center_vertical"
+        android:text="Label2" />
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Value2"
-            android:id="@+id/sensvals_txtValue2"
-            android:layout_alignTop="@+id/sensvals_txtLbl2"
-            android:layout_alignParentRight="true"/>
+        android:id="@+id/sensvals_txtValue2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/sensvals_txtLbl2"
+        android:text="Value2" />
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Label3"
-            android:id="@+id/sensvals_txtLbl3"
-            android:layout_gravity="left|center_vertical"
-            android:layout_below="@+id/sensvals_txtLbl2"
-            android:layout_alignParentLeft="true"/>
+        android:id="@+id/sensvals_txtLbl3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/sensvals_txtLbl2"
+        android:layout_gravity="left|center_vertical"
+        android:text="Label3" />
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Value3"
-            android:id="@+id/sensvals_txtValue3"
-            android:layout_alignTop="@+id/sensvals_txtLbl3"
-            android:layout_alignParentRight="true"/>
+        android:id="@+id/sensvals_txtValue3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/sensvals_txtLbl3"
+        android:text="Value3" />
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Label4"
-            android:id="@+id/sensvals_txtLbl4"
-            android:layout_gravity="left|center_vertical"
-            android:layout_below="@+id/sensvals_txtLbl3"
-            android:layout_alignParentLeft="true"/>
+        android:id="@+id/sensvals_txtLbl4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/sensvals_txtLbl3"
+        android:layout_gravity="left|center_vertical"
+        android:text="Label4" />
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Value4"
-            android:id="@+id/sensvals_txtValue4"
-            android:layout_alignTop="@+id/sensvals_txtLbl4"
-            android:layout_alignParentRight="true"/>
+        android:id="@+id/sensvals_txtValue4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/sensvals_txtLbl4"
+        android:text="Value4" />
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Label5"
-            android:id="@+id/sensvals_txtLbl5"
-            android:layout_gravity="left|center_vertical"
-            android:layout_below="@+id/sensvals_txtLbl4"
-            android:layout_alignParentLeft="true"/>
+        android:id="@+id/sensvals_txtLbl5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/sensvals_txtLbl4"
+        android:layout_gravity="left|center_vertical"
+        android:text="Label5" />
 
     <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Value5"
-            android:id="@+id/sensvals_txtValue5"
-            android:layout_alignTop="@+id/sensvals_txtLbl5"
-            android:layout_alignParentRight="true"/>
+        android:id="@+id/sensvals_txtValue5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@+id/sensvals_txtLbl5"
+        android:text="Value5" />
+
 </RelativeLayout>
