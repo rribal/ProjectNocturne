@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  ************************************************************************************/
-package com.projectnocturne.sensortag.constants;
+package co.uk.droidinactu.sensortagtester.constants;
 
 /**
  * UUIDs of GATT services as per the GATT specification:

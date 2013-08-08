@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  ************************************************************************************/
-package com.projectnocturne.sensortag.constants;
+package co.uk.droidinactu.sensortagtester.constants;
 
 /**
  * UUIDs and values for working with TI CC2541DK-SENSOR CC2541 SensorTag
