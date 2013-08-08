@@ -31,6 +31,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import co.uk.droidinactu.sensortagtester.constants.SampleGattAttributes;
+import co.uk.droidinactu.sensortagtester.constants.TiBleConstants;
 
 public class SensorTagDashboard extends Activity implements ActionBar.OnNavigationListener {
 	/**
@@ -344,25 +345,27 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 		for (final BluetoothGattService gattService : gattServices) {
 			final HashMap<String, String> currentServiceData = new HashMap<String, String>();
 			uuid = gattService.getUuid().toString();
-			currentServiceData.put(LIST_NAME, SampleGattAttributes.lookup(uuid, unknownServiceString));
-			currentServiceData.put(LIST_UUID, uuid);
-			gattServiceData.add(currentServiceData);
 
-			final ArrayList<HashMap<String, String>> gattCharacteristicGroupData = new ArrayList<HashMap<String, String>>();
-			final List<BluetoothGattCharacteristic> gattCharacteristics = gattService.getCharacteristics();
-			final ArrayList<BluetoothGattCharacteristic> charas = new ArrayList<BluetoothGattCharacteristic>();
-
-			// Loops through available Characteristics.
-			for (final BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
-				charas.add(gattCharacteristic);
-				final HashMap<String, String> currentCharaData = new HashMap<String, String>();
-				uuid = gattCharacteristic.getUuid().toString();
-				currentCharaData.put(LIST_NAME, SampleGattAttributes.lookup(uuid, unknownCharaString));
-				currentCharaData.put(LIST_UUID, uuid);
-				gattCharacteristicGroupData.add(currentCharaData);
+			if (uuid.equalsIgnoreCase(TiBleConstants.IRTEMPERATURE_SERV_UUID)) {
+				// get temperature
+				final List<BluetoothGattCharacteristic> gattCharacteristics = gattService.getCharacteristics();
+				for (final BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
+					Log.i(LOG_TAG,
+							"Temp characteristic ["
+									+ SampleGattAttributes.lookup(gattCharacteristic.getUuid().toString(),
+											unknownCharaString) + "]");
+				}
+			} else if (uuid.equalsIgnoreCase(TiBleConstants.ACCELEROMETER_SERV_UUID)) {
+				// get accelerometer data
+				final List<BluetoothGattCharacteristic> gattCharacteristics = gattService.getCharacteristics();
+				for (final BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
+					Log.i(LOG_TAG,
+							"accel characteristic ["
+									+ SampleGattAttributes.lookup(gattCharacteristic.getUuid().toString(),
+											unknownCharaString) + "]");
+				}
 			}
-			mGattCharacteristics.add(charas);
-			gattCharacteristicData.add(gattCharacteristicGroupData);
+
 		}
 	}
 
