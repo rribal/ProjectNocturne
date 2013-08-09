@@ -3,16 +3,20 @@ package co.uk.droidinactu.sensortagtester;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothGatt;
+import android.bluetooth.BluetoothGattCallback;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.bluetooth.BluetoothManager;
-import android.content.BroadcastReceiver;
+import android.bluetooth.BluetoothProfile;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -112,6 +116,10 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 			return rootView;
 		}
 
+		public void updateTemperature(final String newValue) {
+			sensvals_txtValue1.setText(newValue);
+		}
+
 		/**
          *
          */
@@ -121,11 +129,8 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 	}
 
 	private static final String LOG_TAG = SensorTagDashboard.class.getSimpleName();
-
 	private final SensorTagReadings currReadings = new SensorTagReadings();
-
 	private ImageView sensortagConnectedImg;
-
 	private BluetoothAdapter mBluetoothAdapter;
 
 	/**
@@ -140,60 +145,84 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 	private BluetoothLeService mBluetoothLeService;
 	private boolean mScanning;
 	private ArrayList<ArrayList<BluetoothGattCharacteristic>> mGattCharacteristics = new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
-	private boolean mConnected = false;
+	private final boolean mConnected = false;
 
 	private static final int REQUEST_ENABLE_BT = 1;
+	private BluetoothDevice mBtDevice;
+	private BluetoothGatt mBluetoothGatt;
+	private int mConnectionState = STATE_DISCONNECTED;
+	private static final int STATE_DISCONNECTED = 0;
+	private static final int STATE_CONNECTING = 1;
+	private static final int STATE_CONNECTED = 2;
+
+	private List<BluetoothGattService> mServiceList = null;
+	private final Map<UUID, BluetoothGattCharacteristic> mCharacteristicList = new HashMap<UUID, BluetoothGattCharacteristic>();
+
+	public final static String ACTION_GATT_CONNECTED = "com.example.bluetooth.le.ACTION_GATT_CONNECTED";
+	public final static String ACTION_GATT_DISCONNECTED = "com.example.bluetooth.le.ACTION_GATT_DISCONNECTED";
+	public final static String ACTION_GATT_SERVICES_DISCOVERED = "com.example.bluetooth.le.ACTION_GATT_SERVICES_DISCOVERED";
+	public final static String ACTION_DATA_AVAILABLE = "com.example.bluetooth.le.ACTION_DATA_AVAILABLE";
+	public final static String EXTRA_DATA = "com.example.bluetooth.le.EXTRA_DATA";
 
 	// Stops scanning after 10 seconds.
 	private static final long SCAN_PERIOD = 10000;
 
-	// Device scan callback.
-	private final BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
-
+	private final BluetoothGattCallback mGattCallback = new BluetoothGattCallback() {
 		@Override
-		public void onLeScan(final BluetoothDevice device, final int rssi, final byte[] scanRecord) {
-			runOnUiThread(new Runnable() {
-				@Override
-				public void run() {
-					final Intent gattServiceIntent = new Intent(SensorTagDashboard.this, BluetoothLeService.class);
-					bindService(gattServiceIntent, mServiceConnection, BIND_AUTO_CREATE);
+		// Result of a characteristic read operation
+		public void onCharacteristicRead(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic,
+				final int status) {
+			if (status == BluetoothGatt.GATT_SUCCESS) {
+				if (characteristic.getUuid().equals(UUID.fromString(TiBleConstants.IRTEMPERATURE_DATA_UUID))) {
+					// update temp display
+					sensorValsfragment.updateTemperature("" + characteristic.getValue());
 				}
-			});
-		}
-	};
+			}
+		};
 
-	// Handles various events fired by the Service.
-	// ACTION_GATT_CONNECTED: connected to a GATT server.
-	// ACTION_GATT_DISCONNECTED: disconnected from a GATT server.
-	// ACTION_GATT_SERVICES_DISCOVERED: discovered GATT services.
-	// ACTION_DATA_AVAILABLE: received data from the device. This can be a
-	// result of read
-	// or notification operations.
-	private final BroadcastReceiver mGattUpdateReceiver = new BroadcastReceiver() {
 		@Override
-		public void onReceive(final Context context, final Intent intent) {
-			final String action = intent.getAction();
-			if (BluetoothLeService.ACTION_GATT_CONNECTED.equals(action)) {
-				mConnected = true;
-				updateConnectionState(R.string.sensortag_connected);
-				invalidateOptionsMenu();
-			} else if (BluetoothLeService.ACTION_GATT_DISCONNECTED.equals(action)) {
-				mConnected = false;
-				updateConnectionState(R.string.sensortag_disconnected);
-				invalidateOptionsMenu();
-			} else if (BluetoothLeService.ACTION_GATT_SERVICES_DISCOVERED.equals(action)) {
-				// Show all the supported services and characteristics on the
-				// user interface.
-				parseGattServices(mBluetoothLeService.getSupportedGattServices());
-			} else if (BluetoothLeService.ACTION_DATA_AVAILABLE.equals(action)) {
-				parseData(intent.getStringExtra(BluetoothLeService.EXTRA_DATA));
+		public void onConnectionStateChange(final BluetoothGatt gatt, final int status, final int newState) {
+			if (newState == BluetoothProfile.STATE_CONNECTED) {
+				mConnectionState = STATE_CONNECTED;
+				Log.i(LOG_TAG, "PollingService :: Connected to GATT server.");
+				Log.i(LOG_TAG,
+						"PollingService :: Attempting to start service discovery:" + mBluetoothGatt.discoverServices());
+
+			} else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
+				mConnectionState = STATE_DISCONNECTED;
+				Log.i(LOG_TAG, "PollingService :: Disconnected from GATT server.");
 			}
 		}
 
+		@Override
+		// New services discovered
+		public void onServicesDiscovered(final BluetoothGatt gatt, final int status) {
+			if (status == BluetoothGatt.GATT_SUCCESS) {
+				mServiceList = mBluetoothGatt.getServices();
+				parseGattServices(mServiceList);
+			} else {
+				Log.w(LOG_TAG, "PollingService :: onServicesDiscovered received: " + status);
+			}
+		}
 	};
+
+	// Device scan callback.
+	private final BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
+		@Override
+		public void onLeScan(final BluetoothDevice device, final int rssi, final byte[] scanRecord) {
+			mBtDevice = device;
+			main_txt_device_name.setText(mBtDevice.getName());
+			main_txt_device_address.setText(mBtDevice.getAddress());
+			Log.i(LOG_TAG, "PollingService :: Found device [" + mBtDevice.getName() + "]");
+			if (mBtDevice.getName().equalsIgnoreCase("SensorTag")) {
+				scanLeDevice(false);
+				mBluetoothGatt = device.connectGatt(getApplication(), false, mGattCallback);
+			}
+		}
+	};
+
 	// Code to manage Service lifecycle.
 	private final ServiceConnection mServiceConnection = new ServiceConnection() {
-
 		@Override
 		public void onServiceConnected(final ComponentName componentName, final IBinder service) {
 			mBluetoothLeService = ((BluetoothLeService.LocalBinder) service).getService();
@@ -202,7 +231,7 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 				finish();
 			}
 			// Automatically connects to the device upon successful start-up
-			// initialization.
+			// Initialisation.
 			mBluetoothLeService.connect(mDeviceAddress);
 		}
 
@@ -213,8 +242,11 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 	};
 
 	private final String LIST_NAME = "NAME";
-
 	private final String LIST_UUID = "UUID";
+	private TextView main_txt_device_name;
+	private TextView main_txt_device_address;
+
+	SensorValuesSectionFragment sensorValsfragment = new SensorValuesSectionFragment();
 
 	private void checkBluetoothAvailable() {
 		// Use this check to determine whether BLE is supported on the device.
@@ -237,10 +269,39 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 		}
 	}
 
+	private BluetoothGattCharacteristic getCharacteristic(final BluetoothGattService gattService,
+			final String charUuidStr) {
+		return getCharacteristic(gattService, UUID.fromString(charUuidStr));
+	}
+
+	private BluetoothGattCharacteristic getCharacteristic(final BluetoothGattService gattService, final UUID charUuid) {
+		final List<BluetoothGattCharacteristic> tmpCharList = gattService.getCharacteristics();
+		for (final BluetoothGattCharacteristic bleChar : tmpCharList) {
+			if (bleChar.getUuid().equals(charUuid)) { return bleChar; }
+		}
+		return null;
+	}
+
+	@Override
+	protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+		// Ensures Bluetooth is enabled on the device. If Bluetooth is not
+		// currently enabled, fire an intent to display a dialog asking the user
+		// to grant permission to enable it.
+		if (!mBluetoothAdapter.isEnabled()) {
+			if (!mBluetoothAdapter.isEnabled()) {
+				final Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+				startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+			}
+		} else {
+			scanLeDevice(true);
+		}
+	}
+
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		mHandler = new Handler();
 
 		// Set up the action bar to show a dropdown list.
 		final ActionBar actionBar = getActionBar();
@@ -254,9 +315,12 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 						android.R.id.text1, new String[] { getString(R.string.title_section1),
 								getString(R.string.title_section2), getString(R.string.title_section3), }), this);
 
+		checkBluetoothAvailable();
+
 		sensortagConnectedImg = (ImageView) findViewById(R.id.main_img_connected);
 
-		checkBluetoothAvailable();
+		main_txt_device_name = (TextView) findViewById(R.id.main_txt_device_name);
+		main_txt_device_address = (TextView) findViewById(R.id.main_txt_device_address);
 	}
 
 	@Override
@@ -274,11 +338,10 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 		Bundle args;
 		switch (position) {
 		case 0:
-			fragment = new SensorValuesSectionFragment();
 			args = new Bundle();
 			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
-			fragment.setArguments(args);
-			getFragmentManager().beginTransaction().replace(R.id.container, fragment).commit();
+			sensorValsfragment.setArguments(args);
+			getFragmentManager().beginTransaction().replace(R.id.container, sensorValsfragment).commit();
 			break;
 		default:
 			fragment = new DummySectionFragment();
@@ -309,27 +372,20 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 		super.onResume();
 
 		// Ensures Bluetooth is enabled on the device. If Bluetooth is not
-		// currently enabled,
-		// fire an intent to display a dialog asking the user to grant
-		// permission to enable it.
+		// currently enabled, fire an intent to display a dialog asking the user
+		// to grant permission to enable it.
 		if (!mBluetoothAdapter.isEnabled()) {
-			if (!mBluetoothAdapter.isEnabled()) {
-				final Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-				startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-			}
+			final Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+			startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+		} else {
+			scanLeDevice(true);
 		}
-		scanLeDevice(true);
 	}
 
 	@Override
 	public void onSaveInstanceState(final Bundle outState) {
 		// Serialize the current dropdown position.
 		outState.putInt(STATE_SELECTED_NAVIGATION_ITEM, getActionBar().getSelectedNavigationIndex());
-	}
-
-	private void parseData(final String data) {
-		// TODO Auto-generated method stub
-
 	}
 
 	private void parseGattServices(final List<BluetoothGattService> gattServices) {
@@ -347,14 +403,17 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 			uuid = gattService.getUuid().toString();
 
 			if (uuid.equalsIgnoreCase(TiBleConstants.IRTEMPERATURE_SERV_UUID)) {
-				// get temperature
-				final List<BluetoothGattCharacteristic> gattCharacteristics = gattService.getCharacteristics();
-				for (final BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
-					Log.i(LOG_TAG,
-							"Temp characteristic ["
-									+ SampleGattAttributes.lookup(gattCharacteristic.getUuid().toString(),
-											unknownCharaString) + "]");
-				}
+				// enableTempSensor
+				final byte[] data = new byte[1];
+				data[0] = (byte) Integer.parseInt("1", 16);
+				BluetoothGattCharacteristic mChar = getCharacteristic(gattService,
+						TiBleConstants.IRTEMPERATURE_CONF_UUID);
+				mChar.setValue(data);
+				mBluetoothGatt.writeCharacteristic(mChar);
+
+				mChar = getCharacteristic(gattService, TiBleConstants.IRTEMPERATURE_DATA_UUID);
+				final boolean tempVal = mBluetoothGatt.readCharacteristic(mChar);
+
 			} else if (uuid.equalsIgnoreCase(TiBleConstants.ACCELEROMETER_SERV_UUID)) {
 				// get accelerometer data
 				final List<BluetoothGattCharacteristic> gattCharacteristics = gattService.getCharacteristics();
@@ -377,7 +436,6 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 				public void run() {
 					mScanning = false;
 					mBluetoothAdapter.stopLeScan(mLeScanCallback);
-					invalidateOptionsMenu();
 				}
 			}, SCAN_PERIOD);
 
