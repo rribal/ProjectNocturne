@@ -186,7 +186,7 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 				mConnectionState = STATE_CONNECTED;
 				Log.i(LOG_TAG, "PollingService :: Connected to GATT server.");
 				Log.i(LOG_TAG,
-						"PollingService :: Attempting to start service discovery:" + mBluetoothGatt.discoverServices());
+						"PollingService :: Attempting to start service discovery: " + mBluetoothGatt.discoverServices());
 
 			} else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
 				mConnectionState = STATE_DISCONNECTED;
@@ -197,6 +197,7 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 		@Override
 		// New services discovered
 		public void onServicesDiscovered(final BluetoothGatt gatt, final int status) {
+			Log.i(LOG_TAG, "PollingService :: onServicesDiscovered()");
 			if (status == BluetoothGatt.GATT_SUCCESS) {
 				mServiceList = mBluetoothGatt.getServices();
 				parseGattServices(mServiceList);
@@ -213,6 +214,7 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 			mBtDevice = device;
 			main_txt_device_name.setText(mBtDevice.getName());
 			main_txt_device_address.setText(mBtDevice.getAddress());
+
 			Log.i(LOG_TAG, "PollingService :: Found device [" + mBtDevice.getName() + "]");
 			if (mBtDevice.getName().equalsIgnoreCase("SensorTag")) {
 				scanLeDevice(false);
