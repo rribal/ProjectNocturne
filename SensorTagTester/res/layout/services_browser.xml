@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" >
+
+   <LinearLayout
+        android:id="@+id/services_browser_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/simple_key_fragment" />
+
+        <TextView android:padding="15dp"
+        	android:id="@+id/accelerometerTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/accelerometer"
+            android:gravity="center"
+            android:text="x:\ny:\nz:\n" />
+
+        <TextView android:padding="15dp"
+        	android:id="@+id/magnetometerTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/sensortag_magnetometer"
+            android:gravity="center"
+            android:text="x:\ny:\nz:\n" />
+
+        <TextView android:padding="15dp"
+        	android:id="@+id/gyroscopeTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/gyroscope"
+            android:gravity="center"
+            android:text="x:\ny:\nz:\n" />
+
+        <TextView android:padding="15dp"
+        	android:id="@+id/ir_temperature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/irtemperature"
+            android:gravity="center"
+            android:text="°C" />
+
+        <TextView android:padding="15dp"
+        	android:id="@+id/ambientTemperatureTxt"	
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/temperature"
+            android:gravity="center"
+            android:text="°C" />
+
+        <TextView android:padding="15dp"
+        	android:id="@+id/humidityTxt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableLeft="@drawable/humidity"
+            android:gravity="center"
+            android:text="%rH" />
+    </LinearLayout>
+
+</ScrollView>

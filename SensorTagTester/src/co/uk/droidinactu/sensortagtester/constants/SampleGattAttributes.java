@@ -18,8 +18,6 @@ package co.uk.droidinactu.sensortagtester.constants;
 
 import java.util.HashMap;
 
-import android.util.Log;
-
 /**
  * This class includes a small subset of standard GATT attributes for
  * demonstration purposes.
@@ -103,8 +101,8 @@ public class SampleGattAttributes {
 	}
 
 	public static String lookup(final String uuid, final String defaultName) {
-		Log.i(LOG_TAG, "lookup [" + uuid + " : " + defaultName + "]");
+		// Log.i(LOG_TAG, "lookup [" + uuid + " : " + defaultName + "]");
 		final String name = attributes.get(uuid.toUpperCase());
-		return name == null ? defaultName : name;
+		return (name == null ? defaultName : name);
 	}
 }

@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:text="TextView" />
+        android:text="No Device" />
 
     <TextView
         android:id="@+id/main_txt_device_address"
@@ -28,13 +28,22 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/main_txt_device_name"
-        android:text="TextView" />
+        android:text="No Address" />
+
+    <TextView
+        android:id="@+id/main_txt_device_connected"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/main_txt_device_address"
+        android:text="Not Connected" />
 
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/main_img_connected"
+        android:layout_alignParentBottom="true"
         tools:context=".SensorTagDashboard"
         tools:ignore="MergeRootFrame" >
     </FrameLayout>
