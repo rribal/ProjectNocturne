@@ -35,6 +35,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import co.uk.droidinactu.sensortagtester.constants.BleServices;
 import co.uk.droidinactu.sensortagtester.constants.SampleGattAttributes;
 import co.uk.droidinactu.sensortagtester.constants.TiBleConstants;
 
@@ -117,6 +118,14 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 			return rootView;
 		}
 
+		public void updateGyroscope(final String newValue) {
+			sensvals_txtValue2.setText(newValue);
+		}
+
+		public void updateKeys(final String newValue) {
+			sensvals_txtValue3.setText(newValue);
+		}
+
 		public void updateTemperature(final String newValue) {
 			sensvals_txtValue1.setText(newValue);
 		}
@@ -142,14 +151,17 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 	private boolean mDeviceConnected = false;
 
 	private static final int REQUEST_ENABLE_BT = 1;
-	private BluetoothDevice mBtDevice;
-	private BluetoothGatt mBluetoothGatt;
+	private BluetoothDevice mBtDeviceST;
+	private BluetoothDevice mBtDeviceHrm;
+	private BluetoothGatt mBluetoothGattST;
+	private BluetoothGatt mBluetoothGattHrm;
 	private int mConnectionState = STATE_DISCONNECTED;
 	private static final int STATE_DISCONNECTED = 0;
 	private static final int STATE_CONNECTING = 1;
 	private static final int STATE_CONNECTED = 2;
 
 	private List<BluetoothGattService> mServiceList = null;
+	private List<BluetoothGattService> mServiceListHrm = null;
 
 	public final static String ACTION_GATT_CONNECTED = "com.example.bluetooth.le.ACTION_GATT_CONNECTED";
 	public final static String ACTION_GATT_DISCONNECTED = "com.example.bluetooth.le.ACTION_GATT_DISCONNECTED";
@@ -160,65 +172,152 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 	// Stops scanning after 10 seconds.
 	private static final long SCAN_PERIOD = 15000;
 
+	private final BluetoothGattCallback mGattCallbackHrm = new BluetoothGattCallback() {
+
+		@Override
+		public void onCharacteristicChanged(final BluetoothGatt aGatt, final BluetoothGattCharacteristic aCharacteristic) {
+			Log.v(LOG_TAG,
+					"mGattCallbackHrm :: onCharacteristicChanged() [UUID:"
+							+ SampleGattAttributes.lookup(aCharacteristic.getUuid().toString(), aCharacteristic
+									.getUuid().toString()) + "]");
+		}
+
+		@Override
+		public void onConnectionStateChange(final BluetoothGatt aGatt, final int aStatus, final int aNewState) {
+			Log.v(LOG_TAG, "mGattCallbackHrm :: onConnectionStateChange()");
+			super.onConnectionStateChange(aGatt, aStatus, aNewState);
+		}
+
+		@Override
+		public void onServicesDiscovered(final BluetoothGatt aGatt, final int aStatus) {
+			Log.v(LOG_TAG, "mGattCallbackHrm :: onServicesDiscovered()");
+			try {
+				if (aStatus == BluetoothGatt.GATT_SUCCESS) {
+					mServiceListHrm = mBluetoothGattHrm.getServices();
+					parseGattServicesHrm(mServiceListHrm);
+				} else {
+					Log.w(LOG_TAG, "BluetoothGattCallback :: onServicesDiscovered received: " + aStatus);
+				}
+			} catch (final Exception e) {
+				Log.e(LOG_TAG, "", e);
+			}
+		}
+
+	};
+
 	private final BluetoothGattCallback mGattCallback = new BluetoothGattCallback() {
 		@Override
 		public void onCharacteristicChanged(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic) {
-			Log.i(LOG_TAG,
+			Log.v(LOG_TAG,
 					"BluetoothGattCallback :: onCharacteristicChanged() [UUID:"
 							+ SampleGattAttributes.lookup(characteristic.getUuid().toString(), characteristic.getUuid()
 									.toString()) + "]");
 
 			try {
 				if (characteristic.getUuid().equals(UUID.fromString(TiBleConstants.IRTEMPERATURE_DATA_UUID))) {
-					Log.i(LOG_TAG, "BluetoothGattCallback :: onCharacteristicChanged() : IRTEMPERATURE_DATA_UUID");
+					Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicChanged() : IRTEMPERATURE_DATA_UUID");
 
 					// Ambient temp is offset 2
 					final int offset = 2;
 					final Integer lowerByte = characteristic.getIntValue(FORMAT_UINT8, offset);
 					final Integer upperByte = characteristic.getIntValue(FORMAT_UINT8, offset + 1);
 					final double value = ((upperByte << 8) + lowerByte) / 128.0;
-					// update temp display
+					// update display
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
-							sensorValsfragment.updateTemperature("" + value);
+							final String str1Fmt = "%s °C";
+							sensorValsfragment.updateTemperature(String.format(str1Fmt, value));
 						}
 					});
 				} else if (characteristic.getUuid().equals(UUID.fromString(TiBleConstants.ACCELEROMETER_DATA_UUID))) {
-					Log.i(LOG_TAG, "BluetoothGattCallback :: onCharacteristicChanged() : ACCELEROMETER_DATA_UUID");
+					Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicChanged() : ACCELEROMETER_DATA_UUID");
 				} else if (characteristic.getUuid().equals(UUID.fromString(TiBleConstants.BAROMETER_DATA_UUID))) {
-					Log.i(LOG_TAG, "BluetoothGattCallback :: onCharacteristicChanged() : BAROMETER_DATA_UUID");
+					Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicChanged() : BAROMETER_DATA_UUID");
 				} else if (characteristic.getUuid().equals(UUID.fromString(TiBleConstants.GYROSCOPE_DATA_UUID))) {
-					Log.i(LOG_TAG, "BluetoothGattCallback :: onCharacteristicChanged() : GYROSCOPE_DATA_UUID");
+					Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicChanged() : GYROSCOPE_DATA_UUID");
+
+					// NB: x,y,z has a weird order.
+					final float y = MathUtils.shortSignedAtOffset(characteristic, 0) * (500f / 65536f) * -1;
+					final float x = MathUtils.shortSignedAtOffset(characteristic, 2) * (500f / 65536f);
+					final float z = MathUtils.shortSignedAtOffset(characteristic, 4) * (500f / 65536f);
+
+					final DecimalFormat decimal = new DecimalFormat("+0.00;-0.00");
+					final String msg = "X: " + decimal.format(x) + "/s" + "\nY: " + decimal.format(y) + "/s" + "\nZ: "
+							+ decimal.format(z) + "/s";
+
+					Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicRead() : Gyroscope Data [" + msg + "]");
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							sensorValsfragment.updateGyroscope(msg);
+						}
+					});
+
 				} else if (characteristic.getUuid().equals(UUID.fromString(TiBleConstants.HUMIDITY_DATA_UUID))) {
-					Log.i(LOG_TAG, "BluetoothGattCallback :: onCharacteristicChanged() : HUMIDITY_DATA_UUID");
+					Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicChanged() : HUMIDITY_DATA_UUID");
 				} else if (characteristic.getUuid().equals(UUID.fromString(TiBleConstants.MAGNETOMETER_DATA_UUID))) {
-					Log.i(LOG_TAG, "BluetoothGattCallback :: onCharacteristicChanged() : MAGNETOMETER_DATA_UUID");
+					Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicChanged() : MAGNETOMETER_DATA_UUID");
 				} else if (characteristic.getUuid().equals(UUID.fromString(TiBleConstants.SIMPLE_KEYS_KEYPRESSED_UUID))) {
-					Log.i(LOG_TAG, "BluetoothGattCallback :: onCharacteristicChanged() : SIMPLE_KEYS_KEYPRESSED_UUID");
+					Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicChanged() : SIMPLE_KEYS_KEYPRESSED_UUID");
+					/*
+					 * The key state is encoded into 1 unsigned byte. bit 0
+					 * designates the right key. bit 1 designates the left key.
+					 * bit 2 designates the side key.
+					 * 
+					 * Weird, in the userguide left and right are opposite.
+					 */
+					final Integer encodedInteger = characteristic.getIntValue(FORMAT_UINT8, 0);
+
+					String msg = "Unknown";
+					switch (encodedInteger) {
+					case 0:
+						msg = "OFF_OFF";
+						break;
+					case 1:
+						msg = "OFF_ON";
+						break;
+					case 2:
+						msg = "ON_OFF";
+						break;
+					case 3:
+						msg = "ON_ON";
+						break;
+					}
+
+					Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicRead() : " + msg + " Switch Pressed");
+					final String tmpMsg = msg;
+					// update display
+					runOnUiThread(new Runnable() {
+						@Override
+						public void run() {
+							sensorValsfragment.updateKeys(tmpMsg);
+						}
+					});
 				}
 			} catch (final Exception e) {
 				Log.e(LOG_TAG, "BluetoothGattCallback :: onCharacteristicChanged()", e);
 			}
+			// writeQueue.issue();
 		};
 
 		@Override
 		// Result of a characteristic read operation
 		public void onCharacteristicRead(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic,
 				final int status) {
-			Log.i(LOG_TAG,
+			Log.v(LOG_TAG,
 					"BluetoothGattCallback :: onCharacteristicRead() [UUID:"
 							+ SampleGattAttributes.lookup(characteristic.getUuid().toString(), characteristic.getUuid()
 									.toString()) + "]");
 			try {
 				if (status == BluetoothGatt.GATT_SUCCESS) {
 					if (characteristic.getUuid().equals(UUID.fromString(TiBleConstants.IRTEMPERATURE_DATA_UUID))) {
-						Log.i(LOG_TAG, "BluetoothGattCallback :: onCharacteristicRead() : IRTEMPERATURE_DATA_UUID");
+						Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicRead() : IRTEMPERATURE_DATA_UUID");
 
 						// Ambient temp is offset 2
 						final int offset = 2;
 						final double value = MathUtils.shortUnsignedAtOffset(characteristic, offset) / 128.0;
-						Log.i(LOG_TAG, "BluetoothGattCallback :: onCharacteristicRead() : Temperature Data : " + value);
+						Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicRead() : Temperature Data : " + value);
 						// update temp display
 						runOnUiThread(new Runnable() {
 							@Override
@@ -227,11 +326,11 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 							}
 						});
 					} else if (characteristic.getUuid().equals(UUID.fromString(TiBleConstants.ACCELEROMETER_DATA_UUID))) {
-						Log.i(LOG_TAG, "BluetoothGattCallback :: onCharacteristicRead() : ACCELEROMETER_DATA_UUID");
+						Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicRead() : ACCELEROMETER_DATA_UUID");
 					} else if (characteristic.getUuid().equals(UUID.fromString(TiBleConstants.BAROMETER_DATA_UUID))) {
-						Log.i(LOG_TAG, "BluetoothGattCallback :: onCharacteristicRead() : BAROMETER_DATA_UUID");
+						Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicRead() : BAROMETER_DATA_UUID");
 					} else if (characteristic.getUuid().equals(UUID.fromString(TiBleConstants.GYROSCOPE_DATA_UUID))) {
-						Log.i(LOG_TAG, "BluetoothGattCallback :: onCharacteristicRead() : GYROSCOPE_DATA_UUID");
+						Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicRead() : GYROSCOPE_DATA_UUID");
 
 						// NB: x,y,z has a weird order.
 						final float y = MathUtils.shortSignedAtOffset(characteristic, 0) * (500f / 65536f) * -1;
@@ -242,15 +341,15 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 						final String msg = "X: " + decimal.format(x) + "�/s" + "\nY: " + decimal.format(y) + "�/s"
 								+ "\nZ: " + decimal.format(z) + "�/s";
 
-						Log.i(LOG_TAG, "BluetoothGattCallback :: onCharacteristicRead() : Gyroscope Data [" + msg + "]");
+						Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicRead() : Gyroscope Data [" + msg + "]");
 
 					} else if (characteristic.getUuid().equals(UUID.fromString(TiBleConstants.HUMIDITY_DATA_UUID))) {
-						Log.i(LOG_TAG, "BluetoothGattCallback :: onCharacteristicRead() : HUMIDITY_DATA_UUID");
+						Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicRead() : HUMIDITY_DATA_UUID");
 					} else if (characteristic.getUuid().equals(UUID.fromString(TiBleConstants.MAGNETOMETER_DATA_UUID))) {
-						Log.i(LOG_TAG, "BluetoothGattCallback :: onCharacteristicRead() : MAGNETOMETER_DATA_UUID");
+						Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicRead() : MAGNETOMETER_DATA_UUID");
 					} else if (characteristic.getUuid().equals(
 							UUID.fromString(TiBleConstants.SIMPLE_KEYS_KEYPRESSED_UUID))) {
-						Log.i(LOG_TAG, "BluetoothGattCallback :: onCharacteristicRead() : SIMPLE_KEYS_KEYPRESSED_UUID");
+						Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicRead() : SIMPLE_KEYS_KEYPRESSED_UUID");
 					}
 				}
 			} catch (final Exception e) {
@@ -263,7 +362,7 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 		public void onCharacteristicWrite(final BluetoothGatt gatt, final BluetoothGattCharacteristic characteristic,
 				final int status) {
 			try {
-				Log.i(LOG_TAG,
+				Log.v(LOG_TAG,
 						"BluetoothGattCallback :: onCharacteristicWrite() [status:"
 								+ status
 								+ "] "
@@ -274,17 +373,17 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 				super.onCharacteristicWrite(gatt, characteristic, status);
 
 				if (characteristic.getUuid().equals(UUID.fromString(TiBleConstants.IRTEMPERATURE_CONF_UUID))) {
-					Log.i(LOG_TAG, "BluetoothGattCallback :: onCharacteristicWrite() trying to read temperature ");
+					Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicWrite() trying to read temperature ");
 					final boolean tempValRead = sensorTemperatureRead(
 							gatt.getService(UUID.fromString(TiBleConstants.IRTEMPERATURE_SERV_UUID)), characteristic);
-					Log.i(LOG_TAG, "BluetoothGattCallback :: onCharacteristicWrite() trying to read temperature "
+					Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicWrite() trying to read temperature "
 							+ (tempValRead ? "worked" : "failed"));
 
 				} else if (characteristic.getUuid().equals(UUID.fromString(TiBleConstants.GYROSCOPE_CONF_UUID))) {
-					Log.i(LOG_TAG, "BluetoothGattCallback :: onCharacteristicWrite() trying to read gyroscope ");
+					Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicWrite() trying to read gyroscope ");
 					final boolean tempValRead = sensorGyroscopeRead(
 							gatt.getService(UUID.fromString(TiBleConstants.GYROSCOPE_SERV_UUID)), characteristic);
-					Log.i(LOG_TAG, "BluetoothGattCallback :: onCharacteristicWrite() trying to read gyroscope "
+					Log.v(LOG_TAG, "BluetoothGattCallback :: onCharacteristicWrite() trying to read gyroscope "
 							+ (tempValRead ? "worked" : "failed"));
 
 				}
@@ -297,21 +396,20 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 
 		@Override
 		public void onConnectionStateChange(final BluetoothGatt gatt, final int status, final int newState) {
-			Log.i(LOG_TAG, "BluetoothGattCallback :: onConnectionStateChange()");
+			Log.v(LOG_TAG, "BluetoothGattCallback :: onConnectionStateChange()");
 			try {
 				if (newState == BluetoothProfile.STATE_CONNECTED) {
 					mConnectionState = STATE_CONNECTED;
 					mDeviceConnected = true;
-					if (mBluetoothGatt != gatt) {
-						Log.i(LOG_TAG, "BluetoothGattCallback :: updating GATT object");
-						mBluetoothGatt = gatt;
-						mBtDevice = mBluetoothGatt.getDevice();
+					if (mBluetoothGattST != gatt) {
+						Log.v(LOG_TAG, "BluetoothGattCallback :: updating GATT object");
+						mBluetoothGattST = gatt;
+						mBtDeviceST = mBluetoothGattST.getDevice();
 					}
-					Log.i(LOG_TAG, "BluetoothGattCallback :: Connected to GATT server on device ["
+					Log.v(LOG_TAG, "BluetoothGattCallback :: Connected to GATT server on device ["
 							+ gatt.getDevice().getName() + "]");
-					Log.i(LOG_TAG,
-							"BluetoothGattCallback :: Attempting to start service discovery: "
-									+ mBluetoothGatt.discoverServices());
+					Log.v(LOG_TAG, "BluetoothGattCallback :: Attempting to start service discovery: "
+							+ mBluetoothGattST.discoverServices());
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
@@ -323,7 +421,7 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 					mConnectionState = STATE_DISCONNECTED;
 					mDeviceConnected = false;
 					mDeviceFound = false;
-					Log.i(LOG_TAG, "BluetoothGattCallback :: Disconnected from GATT server");
+					Log.v(LOG_TAG, "BluetoothGattCallback :: Disconnected from GATT server");
 					runOnUiThread(new Runnable() {
 						@Override
 						public void run() {
@@ -340,7 +438,7 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 		@Override
 		public void onDescriptorRead(final BluetoothGatt gatt, final BluetoothGattDescriptor descriptor,
 				final int status) {
-			Log.i(LOG_TAG, "BluetoothGattCallback :: onDescriptorRead()");
+			Log.v(LOG_TAG, "BluetoothGattCallback :: onDescriptorRead()");
 			try {
 				super.onDescriptorRead(gatt, descriptor, status);
 			} catch (final Exception e) {
@@ -352,7 +450,7 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 		@Override
 		public void onDescriptorWrite(final BluetoothGatt gatt, final BluetoothGattDescriptor descriptor,
 				final int status) {
-			Log.i(LOG_TAG, "BluetoothGattCallback :: onDescriptorWrite()");
+			Log.v(LOG_TAG, "BluetoothGattCallback :: onDescriptorWrite()");
 			try {
 				super.onDescriptorWrite(gatt, descriptor, status);
 			} catch (final Exception e) {
@@ -364,10 +462,10 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 		@Override
 		// New services discovered
 		public void onServicesDiscovered(final BluetoothGatt gatt, final int status) {
-			Log.i(LOG_TAG, "BluetoothGattCallback :: onServicesDiscovered()");
+			Log.v(LOG_TAG, "BluetoothGattCallback :: onServicesDiscovered()");
 			try {
 				if (status == BluetoothGatt.GATT_SUCCESS) {
-					mServiceList = mBluetoothGatt.getServices();
+					mServiceList = mBluetoothGattST.getServices();
 					parseGattServices(mServiceList);
 				} else {
 					Log.w(LOG_TAG, "BluetoothGattCallback :: onServicesDiscovered received: " + status);
@@ -377,30 +475,37 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 			}
 		}
 	};
-
 	// Device scan callback.
 	private final BluetoothAdapter.LeScanCallback mLeScanCallback = new BluetoothAdapter.LeScanCallback() {
 		@Override
 		public void onLeScan(final BluetoothDevice device, final int rssi, final byte[] scanRecord) {
-			Log.i(LOG_TAG, "BluetoothGattCallback::onLeScan()");
-			mBtDevice = device;
-			Log.i(LOG_TAG, "BluetoothGattCallback::onLeScan() Found device [" + mBtDevice.getName() + "]");
+			Log.v(LOG_TAG, "BluetoothGattCallback::onLeScan()");
+			mBtDeviceST = device;
+			Log.v(LOG_TAG, "BluetoothGattCallback::onLeScan() Found device [" + mBtDeviceST.getName() + "]");
 			runOnUiThread(new Runnable() {
 				@Override
 				public void run() {
-					main_txt_device_name.setText(mBtDevice.getName());
-					main_txt_device_address.setText(mBtDevice.getAddress());
+					main_txt_device_name.setText(mBtDeviceST.getName());
+					main_txt_device_address.setText(mBtDeviceST.getAddress());
 					main_txt_device_connected.setText("Disconnected");
 				}
 			});
 			mDeviceFound = true;
 
-			if (mBtDevice.getName().equalsIgnoreCase("SensorTag")) {
+			if (mBtDeviceST.getName().equalsIgnoreCase("SensorTag")) {
 				scanLeDevice(false);
-				Log.i(LOG_TAG,
-						"BluetoothGattCallback::onLeScan() attempting to connect to device [" + mBtDevice.getName()
+				Log.v(LOG_TAG,
+						"BluetoothGattCallback::onLeScan() attempting to connect to device [" + mBtDeviceST.getName()
 								+ "]");
-				mBluetoothGatt = device.connectGatt(getApplication(), false, mGattCallback);
+				mBtDeviceST = device;
+				mBluetoothGattST = device.connectGatt(getApplication(), false, mGattCallback);
+			} else if (mBtDeviceST.getName().equalsIgnoreCase("HRM")) {
+				Log.v(LOG_TAG,
+						"BluetoothGattCallback::onLeScan() attempting to connect to device [" + mBtDeviceST.getName()
+								+ "]");
+				mBtDeviceHrm = device;
+				mBluetoothGattHrm = device.connectGatt(getApplication(), false, mGattCallbackHrm);
+
 			}
 		}
 	};
@@ -414,7 +519,7 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 	private final HashMap<String, String> currentServiceData = new HashMap<String, String>();
 
 	private void checkBluetoothAvailable() {
-		Log.i(LOG_TAG, "checkBluetoothAvailable()");
+		Log.v(LOG_TAG, "checkBluetoothAvailable()");
 		// Use this check to determine whether BLE is supported on the device.
 		// Then you can selectively disable BLE-related features.
 		if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
@@ -436,18 +541,18 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 	}
 
 	private BluetoothGattCharacteristic getCharacteristic(final BluetoothGattService gattService, final UUID charUuid) {
-		Log.i(LOG_TAG, "getCharacteristic()");
+		Log.v(LOG_TAG, "getCharacteristic()");
 		final List<BluetoothGattCharacteristic> tmpCharList = gattService.getCharacteristics();
 		for (final BluetoothGattCharacteristic bleChar : tmpCharList) {
 			if (bleChar.getUuid().equals(charUuid)) { return bleChar; }
 		}
-		Log.i(LOG_TAG, "getCharacteristic() [" + charUuid.toString() + "] not found ");
+		Log.v(LOG_TAG, "getCharacteristic() [" + charUuid.toString() + "] not found ");
 		return null;
 	}
 
 	@Override
 	protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
-		Log.i(LOG_TAG, "onActivityResult()");
+		Log.v(LOG_TAG, "onActivityResult()");
 		// Ensures Bluetooth is enabled on the device. If Bluetooth is not
 		// currently enabled, fire an intent to display a dialog asking the user
 		// to grant permission to enable it.
@@ -461,7 +566,7 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 
 	@Override
 	protected void onCreate(final Bundle savedInstanceState) {
-		Log.i(LOG_TAG, "onCreate()");
+		Log.v(LOG_TAG, "onCreate()");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		mHandler = new Handler();
@@ -558,7 +663,7 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 	}
 
 	private void parseGattServices(final List<BluetoothGattService> gattServices) {
-		Log.i(LOG_TAG, "parseGattServices()");
+		Log.v(LOG_TAG, "parseGattServices()");
 		if (gattServices == null) { return; }
 		String uuid = null;
 		final String unknownCharaString = "unknown_characteristic";
@@ -568,15 +673,15 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 			uuid = gattService.getUuid().toString();
 
 			if (uuid.equalsIgnoreCase(TiBleConstants.IRTEMPERATURE_DATA_UUID)) {
-				Log.i(LOG_TAG, "parseGattServices() got IRTEMPERATURE_DATA_UUID");
+				Log.v(LOG_TAG, "parseGattServices() got IRTEMPERATURE_DATA_UUID");
 				// sensorTemperatureRead(gattService);
 
 			} else if (uuid.equalsIgnoreCase(TiBleConstants.IRTEMPERATURE_CONF_UUID)) {
-				Log.i(LOG_TAG, "parseGattServices() got IRTEMPERATURE_CONF_UUID");
+				Log.v(LOG_TAG, "parseGattServices() got IRTEMPERATURE_CONF_UUID");
 				// sensorTemperatureEnable(gattService);
 
 			} else if (uuid.equalsIgnoreCase(TiBleConstants.IRTEMPERATURE_SERV_UUID)) {
-				Log.i(LOG_TAG, "parseGattServices() got IRTEMPERATURE_SERV_UUID");
+				Log.v(LOG_TAG, "parseGattServices() got IRTEMPERATURE_SERV_UUID");
 
 				final List<BluetoothGattCharacteristic> gattCharacteristicData = gattService.getCharacteristics();
 
@@ -588,19 +693,19 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 				}
 
 			} else if (uuid.equalsIgnoreCase(TiBleConstants.ACCELEROMETER_SERV_UUID)) {
-				Log.i(LOG_TAG, "parseGattServices() got ACCELEROMETER_SERV_UUID");
+				Log.v(LOG_TAG, "parseGattServices() got ACCELEROMETER_SERV_UUID");
 				// get accelerometer data
 				final List<BluetoothGattCharacteristic> gattCharacteristics = gattService.getCharacteristics();
 				for (final BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
-					Log.i(LOG_TAG,
+					Log.v(LOG_TAG,
 							"accel characteristic ["
 									+ SampleGattAttributes.lookup(gattCharacteristic.getUuid().toString(),
 											unknownCharaString) + "]");
 				}
 			} else if (uuid.equalsIgnoreCase(TiBleConstants.BAROMETER_SERV_UUID)) {
-				Log.i(LOG_TAG, "parseGattServices() got BAROMETER_SERV_UUID");
+				Log.v(LOG_TAG, "parseGattServices() got BAROMETER_SERV_UUID");
 			} else if (uuid.equalsIgnoreCase(TiBleConstants.GYROSCOPE_SERV_UUID)) {
-				Log.i(LOG_TAG, "parseGattServices() got GYROSCOPE_SERV_UUID");
+				Log.v(LOG_TAG, "parseGattServices() got GYROSCOPE_SERV_UUID");
 
 				final List<BluetoothGattCharacteristic> gattCharacteristicData = gattService.getCharacteristics();
 
@@ -612,25 +717,53 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 				}
 
 			} else if (uuid.equalsIgnoreCase(TiBleConstants.HUMIDITY_SERV_UUID)) {
-				Log.i(LOG_TAG, "parseGattServices() got HUMIDITY_SERV_UUID");
+				Log.v(LOG_TAG, "parseGattServices() got HUMIDITY_SERV_UUID");
 			} else if (uuid.equalsIgnoreCase(TiBleConstants.MAGNETOMETER_SERV_UUID)) {
-				Log.i(LOG_TAG, "parseGattServices() got MAGNETOMETER_SERV_UUID");
+				Log.v(LOG_TAG, "parseGattServices() got MAGNETOMETER_SERV_UUID");
 			} else if (uuid.equalsIgnoreCase(TiBleConstants.SIMPLE_KEYS_SERV_UUID)) {
-				Log.i(LOG_TAG, "parseGattServices() got SIMPLE_KEYS_SERV_UUID");
+				Log.v(LOG_TAG, "parseGattServices() got SIMPLE_KEYS_SERV_UUID");
+
+				final List<BluetoothGattCharacteristic> gattCharacteristicData = gattService.getCharacteristics();
+
+				for (final BluetoothGattCharacteristic bgc : gattCharacteristicData) {
+					if (bgc.getUuid().equals(UUID.fromString(TiBleConstants.SIMPLE_KEYS_DATA_UUID))) {
+						sensorSimpleKeysChangeNotification(gattService, bgc, true);
+					}
+				}
 			}
 
 		}
 	}
 
+	private void parseGattServicesHrm(final List<BluetoothGattService> aServiceListHrm) {
+		Log.v(LOG_TAG, "parseGattServicesHrm()");
+		if (aServiceListHrm == null) { return; }
+		String uuid = null;
+
+		// Loops through available GATT Services.
+		for (final BluetoothGattService gattService : aServiceListHrm) {
+			uuid = gattService.getUuid().toString();
+
+			if (uuid.equalsIgnoreCase(BleServices.HEART_RATE)) {
+				Log.v(LOG_TAG, "parseGattServicesHrm() got BleServices.HEART_RATE");
+
+				final List<BluetoothGattCharacteristic> gattCharacteristicData = gattService.getCharacteristics();
+				for (final BluetoothGattCharacteristic bgc : gattCharacteristicData) {
+
+				}
+			}
+		}
+	}
+
 	private void scanLeDevice(final boolean enable) {
-		Log.i(LOG_TAG, "scanLeDevice(" + (enable ? "true" : "false") + ")");
+		Log.v(LOG_TAG, "scanLeDevice(" + (enable ? "true" : "false") + ")");
 		if (enable) {
 			// Stops scanning after a pre-defined scan period.
 			mHandler.postDelayed(new Runnable() {
 				@Override
 				public void run() {
 					if (mScanning) {
-						Log.i(LOG_TAG, "scanLeDevice() stop scanning after pre-defined period");
+						Log.v(LOG_TAG, "scanLeDevice() stop scanning after pre-defined period");
 						mScanning = false;
 						mBluetoothAdapter.stopLeScan(mLeScanCallback);
 						main_txt_device_name.setText("Failed to find device");
@@ -638,11 +771,11 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 				}
 			}, SCAN_PERIOD);
 
-			Log.i(LOG_TAG, "scanLeDevice() start scanning");
+			Log.v(LOG_TAG, "scanLeDevice() start scanning");
 			mScanning = true;
 			mBluetoothAdapter.startLeScan(mLeScanCallback);
 		} else {
-			Log.i(LOG_TAG, "scanLeDevice() stop scanning");
+			Log.v(LOG_TAG, "scanLeDevice() stop scanning");
 			mScanning = false;
 			mBluetoothAdapter.stopLeScan(mLeScanCallback);
 		}
@@ -650,134 +783,190 @@ public class SensorTagDashboard extends Activity implements ActionBar.OnNavigati
 
 	private void sensorGyroscopeChangeNotification(final BluetoothGattService aGattService,
 			final BluetoothGattCharacteristic bgc, final boolean enable) {
-		Log.i(LOG_TAG, "sensorGyroscopeChangeNotification() queueing");
-		writeQueue.queueRunnable(new Runnable() {
+		Log.v(LOG_TAG, "sensorGyroscopeChangeNotification() queueing");
+		final SensorTagWriteRunnable rnble = new SensorTagWriteRunnable() {
 			@Override
 			public void run() {
-				Log.i(LOG_TAG,
+				Log.v(LOG_TAG,
 						"Queue:GyroChgNotif:sensorGyroscopeChangeNotification() enabling notifications for GYROSCOPE_DATA_UUID ");
 
 				final BluetoothGattCharacteristic dataCharacteristic = aGattService.getCharacteristic(UUID
 						.fromString(TiBleConstants.GYROSCOPE_DATA_UUID));
 
-				boolean success = mBluetoothGatt.setCharacteristicNotification(dataCharacteristic, true);
-				if (success) {
-					Log.i(LOG_TAG, "Queue:GyroChgNotif:The notification status was changed.");
+				boolean success = mBluetoothGattST.setCharacteristicNotification(dataCharacteristic, true);
+				if (!success) {
+					Log.v(LOG_TAG, "Queue:GyroChgNotif:Failed to set the notification status.");
 				} else {
-					Log.i(LOG_TAG, "Queue:GyroChgNotif:Failed to set the notification status.");
-				}
+					Log.v(LOG_TAG, "Queue:GyroChgNotif:The notification status was changed.");
 
-				final BluetoothGattDescriptor config = dataCharacteristic.getDescriptor(UUID
-						.fromString(SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG));
-				if (config != null) {
-					Log.i(LOG_TAG, "Queue:GyroChgNotif:Unable to get config descriptor.");
-					return;
-				}
+					final BluetoothGattDescriptor config = dataCharacteristic.getDescriptor(UUID
+							.fromString(SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG));
+					if (config == null) {
+						Log.v(LOG_TAG, "Queue:GyroChgNotif:Unable to get config descriptor.");
+					} else {
+						final byte[] configValue = enable ? ENABLE_NOTIFICATION_VALUE : DISABLE_NOTIFICATION_VALUE;
+						success = config.setValue(configValue);
+						if (!success) {
+							Log.v(LOG_TAG, "Queue:GyroChgNotif:Could not locally store value.");
+						}
 
-				final byte[] configValue = enable ? ENABLE_NOTIFICATION_VALUE : DISABLE_NOTIFICATION_VALUE;
-				success = config.setValue(configValue);
-				if (success) {
-					Log.i(LOG_TAG, "Queue:GyroChgNotif:Could not locally store value.");
-				}
-
-				success = mBluetoothGatt.writeDescriptor(config);
-				if (success) {
-					Log.i(LOG_TAG, "Queue:GyroChgNotif:Initiated a write to descriptor.");
-				} else {
-					Log.i(LOG_TAG, "Queue:GyroChgNotif:Unable to initiate write.");
+						success = mBluetoothGattST.writeDescriptor(config);
+						if (!success) {
+							Log.v(LOG_TAG, "Queue:GyroChgNotif:Initiated a write to descriptor.");
+						} else {
+							Log.v(LOG_TAG, "Queue:GyroChgNotif:Unable to initiate write.");
+						}
+					}
 				}
 			}
-		});
+		};
+		rnble.name = "Enable Gyroscope Sensor Notifications";
+		writeQueue.queueRunnable(rnble);
 	}
 
 	private void sensorGyroscopeEnable(final BluetoothGattService aGattService, final BluetoothGattCharacteristic bgc) {
-		Log.i(LOG_TAG, "sensorGyroscopeEnable() queueing");
-		writeQueue.queueRunnable(new Runnable() {
+		Log.v(LOG_TAG, "sensorGyroscopeEnable() queueing");
+		final SensorTagWriteRunnable rnble = new SensorTagWriteRunnable() {
 			@Override
 			public void run() {
-				Log.i(LOG_TAG, "Queue:sensorGyroscopeEnable() writing 7 to Gyroscope_CONF_UUID ");
+				Log.v(LOG_TAG, "Queue:sensorGyroscopeEnable() writing 7 to Gyroscope_CONF_UUID ");
 				final byte[] data = new byte[] { 7 };
 				bgc.setValue(data);
-				final boolean success = mBluetoothGatt.writeCharacteristic(bgc);
+				final boolean success = mBluetoothGattST.writeCharacteristic(bgc);
 			}
-		});
+		};
+		rnble.name = "Enable Gyroscope Sensor";
+		writeQueue.queueRunnable(rnble);
 	}
 
 	private boolean sensorGyroscopeRead(final BluetoothGattService aGattService, final BluetoothGattCharacteristic bgc) {
-		Log.i(LOG_TAG, "sensorGyroscopeRead() reading Gyroscope_DATA_UUID");
+		Log.v(LOG_TAG, "sensorGyroscopeRead() reading Gyroscope_DATA_UUID");
 		final List<BluetoothGattCharacteristic> gattCharacteristics = aGattService.getCharacteristics();
 		for (final BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
-			if (gattCharacteristic.getUuid().equals(UUID.fromString(TiBleConstants.GYROSCOPE_DATA_UUID))) { return mBluetoothGatt
+			if (gattCharacteristic.getUuid().equals(UUID.fromString(TiBleConstants.GYROSCOPE_DATA_UUID))) { return mBluetoothGattST
 					.readCharacteristic(gattCharacteristic); }
 		}
 		return false;
 	}
 
-	private void sensorTemperatureChangeNotification(final BluetoothGattService aGattService,
+	private void sensorSimpleKeysChangeNotification(final BluetoothGattService aGattService,
 			final BluetoothGattCharacteristic bgc, final boolean enable) {
-		Log.i(LOG_TAG, "sensorTemperatureChangeNotification() queueing");
-		writeQueue.queueRunnable(new Runnable() {
+		Log.v(LOG_TAG, "sensorTemperatureChangeNotification() queueing");
+		final SensorTagWriteRunnable rnble = new SensorTagWriteRunnable() {
 			@Override
 			public void run() {
-				Log.i(LOG_TAG,
-						"Queue:TempChgNotif:Service : "
-								+ SampleGattAttributes.lookup(aGattService.getUuid().toString(), "temp service??"));
-				Log.i(LOG_TAG,
-						"Queue:TempChgNotif:bgc     : "
-								+ SampleGattAttributes.lookup(bgc.getUuid().toString(), "temp char??"));
-				Log.i(LOG_TAG, "Queue:TempChgNotif: enabling notifications for IRTEMPERATURE_DATA_UUID ");
+				Log.v(LOG_TAG,
+						"Queue:KeyPrsdNotif:Service : "
+								+ SampleGattAttributes.lookup(aGattService.getUuid().toString(), "keys service??"));
+				Log.v(LOG_TAG,
+						"Queue:KeyPrsdNotif:bgc     : "
+								+ SampleGattAttributes.lookup(bgc.getUuid().toString(), "keys char??"));
+				Log.v(LOG_TAG, "Queue:KeyPrsdNotif: enabling notifications for SIMPLE_KEYS_DATA_UUID ");
 
 				final BluetoothGattCharacteristic dataCharacteristic = aGattService.getCharacteristic(UUID
-						.fromString(TiBleConstants.IRTEMPERATURE_DATA_UUID));
+						.fromString(TiBleConstants.SIMPLE_KEYS_DATA_UUID));
 
-				boolean success = mBluetoothGatt.setCharacteristicNotification(dataCharacteristic, true);
+				boolean success = mBluetoothGattST.setCharacteristicNotification(dataCharacteristic, true);
 				if (success) {
-					Log.i(LOG_TAG, "Queue:TempChgNotif:The notification status was changed.");
+					Log.v(LOG_TAG, "Queue:KeyPrsdNotif:The notification status was changed.");
 				} else {
-					Log.i(LOG_TAG, "Queue:TempChgNotif:Failed to set the notification status.");
+					Log.v(LOG_TAG, "Queue:KeyPrsdNotif:Failed to set the notification status.");
 				}
 
 				final BluetoothGattDescriptor config = dataCharacteristic.getDescriptor(UUID
 						.fromString(SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG));
 				if (config == null) {
-					Log.i(LOG_TAG, "Queue:TempChgNotif:Unable to get config descriptor.");
+					Log.v(LOG_TAG, "Queue:KeyPrsdNotif:Unable to get config descriptor.");
 					return;
 				}
 
 				final byte[] configValue = enable ? ENABLE_NOTIFICATION_VALUE : DISABLE_NOTIFICATION_VALUE;
 				success = config.setValue(configValue);
-				if (success) {
-					Log.i(LOG_TAG, "Queue:TempChgNotif:Could not locally store value.");
+				if (!success) {
+					Log.v(LOG_TAG, "Queue:KeyPrsdNotif:Could not locally store value.");
 				}
 
-				success = mBluetoothGatt.writeDescriptor(config);
+				success = mBluetoothGattST.writeDescriptor(config);
 				if (success) {
-					Log.i(LOG_TAG, "Queue:TempChgNotif:Initiated a write to descriptor.");
+					Log.v(LOG_TAG, "Queue:KeyPrsdNotif:Initiated a write to descriptor.");
 				} else {
-					Log.i(LOG_TAG, "Queue:TempChgNotif:Unable to initiate write.");
+					Log.v(LOG_TAG, "Queue:KeyPrsdNotif:Unable to initiate write.");
 				}
 			}
-		});
+		};
+		rnble.name = "Enable Keypress Notifications";
+		writeQueue.queueRunnable(rnble);
+	}
+
+	private void sensorTemperatureChangeNotification(final BluetoothGattService aGattService,
+			final BluetoothGattCharacteristic bgc, final boolean enable) {
+		Log.v(LOG_TAG, "sensorTemperatureChangeNotification() queueing");
+		final SensorTagWriteRunnable rnble = new SensorTagWriteRunnable() {
+			@Override
+			public void run() {
+				Log.v(LOG_TAG,
+						"Queue:TempChgNotif:Service : "
+								+ SampleGattAttributes.lookup(aGattService.getUuid().toString(), "temp service??"));
+				Log.v(LOG_TAG,
+						"Queue:TempChgNotif:bgc     : "
+								+ SampleGattAttributes.lookup(bgc.getUuid().toString(), "temp char??"));
+				Log.v(LOG_TAG, "Queue:TempChgNotif: enabling notifications for IRTEMPERATURE_DATA_UUID ");
+
+				final BluetoothGattCharacteristic dataCharacteristic = aGattService.getCharacteristic(UUID
+						.fromString(TiBleConstants.IRTEMPERATURE_DATA_UUID));
+
+				boolean success = mBluetoothGattST.setCharacteristicNotification(dataCharacteristic, true);
+				if (success) {
+					Log.v(LOG_TAG, "Queue:TempChgNotif:The notification status was changed.");
+				} else {
+					Log.v(LOG_TAG, "Queue:TempChgNotif:Failed to set the notification status.");
+				}
+
+				final BluetoothGattDescriptor config = dataCharacteristic.getDescriptor(UUID
+						.fromString(SampleGattAttributes.CLIENT_CHARACTERISTIC_CONFIG));
+				if (config == null) {
+					Log.v(LOG_TAG, "Queue:TempChgNotif:Unable to get config descriptor.");
+					return;
+				}
+
+				final byte[] configValue = enable ? ENABLE_NOTIFICATION_VALUE : DISABLE_NOTIFICATION_VALUE;
+				success = config.setValue(configValue);
+				if (!success) {
+					Log.v(LOG_TAG, "Queue:TempChgNotif:Could not locally store value.");
+				}
+
+				success = mBluetoothGattST.writeDescriptor(config);
+				if (success) {
+					Log.v(LOG_TAG, "Queue:TempChgNotif:Initiated a write to descriptor.");
+				} else {
+					Log.v(LOG_TAG, "Queue:TempChgNotif:Unable to initiate write.");
+				}
+			}
+		};
+		rnble.name = "Enable Temp Sensor Notifications";
+		writeQueue.queueRunnable(rnble);
 	}
 
 	private void sensorTemperatureEnable(final BluetoothGattService aGattService, final BluetoothGattCharacteristic bgc) {
-		Log.i(LOG_TAG, "sensorTemperatureEnable() queueing");
-		writeQueue.queueRunnable(new Runnable() {
+		Log.v(LOG_TAG, "sensorTemperatureEnable() queueing");
+		final SensorTagWriteRunnable rnble = new SensorTagWriteRunnable() {
 			@Override
 			public void run() {
-				Log.i(LOG_TAG, "Queue:sensorTemperatureEnable() writing 1 to IRTEMPERATURE_CONF_UUID ");
+				Log.v(LOG_TAG, "Queue:sensorTemperatureEnable() writing 1 to IRTEMPERATURE_CONF_UUID ");
 				final byte[] data = new byte[] { 1 };
 				bgc.setValue(data);
-				final boolean success = mBluetoothGatt.writeCharacteristic(bgc);
+				final boolean success = mBluetoothGattST.writeCharacteristic(bgc);
 			}
-		});
+		};
+		rnble.name = "Enable Temp Sensor";
+		writeQueue.queueRunnable(rnble);
 	}
 
 	private boolean sensorTemperatureRead(final BluetoothGattService aGattService, final BluetoothGattCharacteristic bgc) {
-		Log.i(LOG_TAG, "sensorTemperatureRead() reading IRTEMPERATURE_DATA_UUID");
+		Log.v(LOG_TAG, "sensorTemperatureRead() reading IRTEMPERATURE_DATA_UUID");
 		final List<BluetoothGattCharacteristic> gattCharacteristics = aGattService.getCharacteristics();
 		for (final BluetoothGattCharacteristic gattCharacteristic : gattCharacteristics) {
-			if (gattCharacteristic.getUuid().equals(UUID.fromString(TiBleConstants.IRTEMPERATURE_DATA_UUID))) { return mBluetoothGatt
+			if (gattCharacteristic.getUuid().equals(UUID.fromString(TiBleConstants.IRTEMPERATURE_DATA_UUID))) { return mBluetoothGattST
 					.readCharacteristic(gattCharacteristic); }
 		}
 

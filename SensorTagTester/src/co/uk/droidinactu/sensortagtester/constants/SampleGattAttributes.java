@@ -93,6 +93,7 @@ public class SampleGattAttributes {
 		attributes.put(TiBleConstants.GYROSCOPE_CONF_UUID, "Gyroscope Conf");
 
 		attributes.put(TiBleConstants.SIMPLE_KEYS_SERV_UUID, "SIMPLE_KEYS_SERV");
+		attributes.put(TiBleConstants.SIMPLE_KEYS_DATA_UUID, "SIMPLE_KEYS_DATA");
 		attributes.put(TiBleConstants.SIMPLE_KEYS_KEYPRESSED_UUID, "SIMPLE_KEYS_KEYPRESSED");
 
 		attributes.put(TiBleConstants.TEST_SERVICE_UUID, "TEST_SERVICE_UUID");
@@ -103,6 +104,6 @@ public class SampleGattAttributes {
 	public static String lookup(final String uuid, final String defaultName) {
 		// Log.i(LOG_TAG, "lookup [" + uuid + " : " + defaultName + "]");
 		final String name = attributes.get(uuid.toUpperCase());
-		return (name == null ? defaultName : name);
+		return name == null ? defaultName : name;
 	}
 }

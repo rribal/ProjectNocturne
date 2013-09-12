@@ -39,7 +39,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/sensvals_txtLbl1"
         android:layout_gravity="left|center_vertical"
-        android:text="Label2" />
+        android:textAppearance="?android:attr/textAppearanceMedium" 
+        android:text="Gyroscope" />
 
     <TextView
         android:id="@+id/sensvals_txtValue2"
@@ -47,24 +48,28 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/sensvals_txtLbl2"
-        android:text="Value2" />
+        android:minLines="3"
+        android:text="Value2"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/sensvals_txtLbl3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/sensvals_txtLbl2"
+        android:layout_below="@+id/sensvals_txtValue2"
+        android:textAppearance="?android:attr/textAppearanceMedium" 
         android:layout_gravity="left|center_vertical"
-        android:text="Label3" />
+        android:text="Buttons" />
 
     <TextView
         android:id="@+id/sensvals_txtValue3"
+        android:textAppearance="?android:attr/textAppearanceMedium" 
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/sensvals_txtLbl3"
-        android:text="Value3" />
+        android:text="OFF_OFF" />
 
     <TextView
         android:id="@+id/sensvals_txtLbl4"
